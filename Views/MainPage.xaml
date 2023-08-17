@@ -2,6 +2,7 @@
 
 <uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:effect="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              xmlns:attachment="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
@@ -9,29 +10,32 @@
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:Class="MAUIBrowser.MainPage"
              xmlns:vm="clr-namespace:MAUIBrowser.ViewModels">
+    
     <uranium:UraniumContentPage.BindingContext>
         <vm:MainPageViewModel />
     </uranium:UraniumContentPage.BindingContext>
+    
     <Shell.TitleView>
-        <Grid
-            ColumnDefinitions="Auto,*">
-            <Label Grid.Column="0"
-                   Text="{Binding Title}"
+        <HorizontalStackLayout BackgroundColor="#368BC1">
+            <Label Text="{Binding Title}"
                    Margin="15"/>
+            <SearchBar x:Name="searchBar"
+                       Text="{Binding WebSours}"
+                       WidthRequest="550"
+                       BackgroundColor="#DBE9FA"
+                       Margin="1"
+                       SearchCommand="{Binding RefreshWebSours}"
+                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
 
-            <ImageButton Grid.Column="1"
-                         BackgroundColor="Transparent"
-                         Source="https://happypik.ru/wp-content/uploads/2019/06/milkart29.jpg"
-                         WidthRequest="35"
-                         HeightRequest="35"
-                         Margin="0,0,15,0"
-                         HorizontalOptions="End"/>
-        </Grid>
-
+        </HorizontalStackLayout>
     </Shell.TitleView>
+
     <Grid>
-        <WebView Source="https://google.com/" />
-        <WebView Source="https://google.com/" />
+        <Grid.Effects>
+            <effect:BlurEffect/>
+        </Grid.Effects>
+        <WebView Source="{Binding WebSours}" />
+
     </Grid>
     
 

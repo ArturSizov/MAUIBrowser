@@ -10,13 +10,15 @@ public class MainPageViewModel : BindableBase
 
 	#region Public property 
 	public string Title => "MAUI Browser";
+    public string WebSours { get; set; } = "https://www.google.com/";
     #endregion
 
 
     #region Commands 
-    public ICommand BackCommand => new DelegateCommand(async () =>
+    public ICommand RefreshWebSours => new DelegateCommand(async () =>
     {
-        await Shell.Current.Navigation.PopAsync();
+        RaisePropertyChanged(nameof(WebSours));
+        
     });
 
     #endregion

@@ -14,7 +14,8 @@ public static class MauiProgram
 			.ConfigureMopups()
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
-			.ConfigureFonts(fonts =>
+            .UseUraniumUIBlurs()
+            .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
