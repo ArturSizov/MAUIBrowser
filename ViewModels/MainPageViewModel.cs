@@ -7,26 +7,12 @@ using Prism.Commands;
 namespace MAUIBrowser.ViewModels;
 public class MainPageViewModel : BindableBase
 {
-
     #region Private property 
-    private bool isVisible = true;
-
+    private string url = string.Empty;
     #endregion
 
-    #region Public property 
-    public string Title => "MAUI Browser";
-    public string Url { get; set; } = "https://www.google.com/";
-    public bool IsVisible { get => isVisible; set => SetProperty(ref isVisible, value); } 
-    #endregion
-
-
-    #region Commands 
-    public ICommand RefreshWebSours => new DelegateCommand(async() =>
-    {
-        RaisePropertyChanged(nameof(Url));
-
-        IsVisible = false;       
-    });
+    #region Public property
+    public string Url { get => url; set => SetProperty(ref url, value); }
 
     #endregion
 }

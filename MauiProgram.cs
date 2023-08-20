@@ -25,8 +25,10 @@ public static class MauiProgram
 
             });
 
-		builder.Services.AddMopupsDialogs().
-						 AddSingleton<MainPageViewModel>();
+		builder.Services.AddMopupsDialogs()
+			.AddSingleton<MainPageViewModel>()
+			.AddSingleton<HomePanelViewModel>();
+		
 
 		var app = builder.Build();
 

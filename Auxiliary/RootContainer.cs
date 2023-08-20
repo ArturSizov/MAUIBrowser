@@ -3,9 +3,9 @@
     public class RootContainer
     {
         private static readonly object _lock = new();
-        private static RootContainer? container = null;
+        private static RootContainer container = null;
 
-        private IServiceProvider? serviceProvider;
+        private IServiceProvider serviceProvider;
 
         public static RootContainer Container
         {
