@@ -1,6 +1,8 @@
 ﻿using Mopups.Hosting;
 using InputKit.Shared.Controls;
 using UraniumUI;
+using MAUIBrowser.ViewModels;
+using MAUIBrowser.Auxiliary;
 
 namespace MAUIBrowser;
 
@@ -19,12 +21,17 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-
-				fonts.AddMaterialIconFonts();
+                fonts.AddFontAwesomeIconFonts();
 
             });
 
-		builder.Services.AddMopupsDialogs();
-		return builder.Build();
+		builder.Services.AddMopupsDialogs().
+						 AddSingleton<MainPageViewModel>();
+
+		var app = builder.Build();
+
+        RootContainer.Container.Initialize(app.Services);
+
+        return app; 
 	}
 }

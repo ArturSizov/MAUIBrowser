@@ -7,38 +7,18 @@
              xmlns:attachment="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:customControls="clr-namespace:MAUIBrowser.CustomControls.Controls"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:Class="MAUIBrowser.MainPage"
-             xmlns:vm="clr-namespace:MAUIBrowser.ViewModels">
+             xmlns:vm="clr-namespace:MAUIBrowser.ViewModels"
+             BackgroundColor="#D3D3D3"
+             x:Name="page"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}">
+
     
-    <uranium:UraniumContentPage.BindingContext>
-        <vm:MainPageViewModel />
-    </uranium:UraniumContentPage.BindingContext>
-    
-    <Shell.TitleView>
-        <HorizontalStackLayout BackgroundColor="#368BC1">
-            <Label Text="{Binding Title}"
-                   Margin="15"/>
-            <SearchBar x:Name="searchBar"
-                       Text="{Binding WebSours}"
-                       WidthRequest="550"
-                       BackgroundColor="#DBE9FA"
-                       Margin="1"
-                       SearchCommand="{Binding RefreshWebSours}"
-                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
-
-        </HorizontalStackLayout>
-    </Shell.TitleView>
-
-    <Grid>
-        <Grid.Effects>
-            <effect:BlurEffect/>
-        </Grid.Effects>
-        <WebView Source="{Binding WebSours}" />
-
-    </Grid>
-    
-
 </uranium:UraniumContentPage>
 
 

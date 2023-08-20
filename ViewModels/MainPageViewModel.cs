@@ -8,17 +8,24 @@ namespace MAUIBrowser.ViewModels;
 public class MainPageViewModel : BindableBase
 {
 
-	#region Public property 
-	public string Title => "MAUI Browser";
-    public string WebSours { get; set; } = "https://www.google.com/";
+    #region Private property 
+    private bool isVisible = true;
+
+    #endregion
+
+    #region Public property 
+    public string Title => "MAUI Browser";
+    public string Url { get; set; } = "https://www.google.com/";
+    public bool IsVisible { get => isVisible; set => SetProperty(ref isVisible, value); } 
     #endregion
 
 
     #region Commands 
-    public ICommand RefreshWebSours => new DelegateCommand(async () =>
+    public ICommand RefreshWebSours => new DelegateCommand(async() =>
     {
-        RaisePropertyChanged(nameof(WebSours));
-        
+        RaisePropertyChanged(nameof(Url));
+
+        IsVisible = false;       
     });
 
     #endregion

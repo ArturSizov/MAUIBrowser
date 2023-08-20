@@ -49,11 +49,28 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\forward.png" />
+	  <None Remove="Resources\Images\google.png" />
+	  <None Remove="Resources\Images\left.gif" />
+	  <None Remove="Resources\Images\refresh.gif" />
+	  <None Remove="Resources\Images\settings.gif" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Prism.Core" Version="8.1.97" />
 		<PackageReference Include="UraniumUI.Blurs" Version="2.5.5" />
+		<PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.5.5" />
 		<PackageReference Include="UraniumUI.Material" Version="2.5.5" />
 		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.5.5" />
 		<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.5.5" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="CustomControls\Controls\SearchEntryControls.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionMAUIBrowserHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>
