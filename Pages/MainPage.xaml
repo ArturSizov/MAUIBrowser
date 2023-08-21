@@ -8,13 +8,11 @@
                             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
                             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
                             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
-                            xmlns:customControls="clr-namespace:MAUIBrowser.CustomControls.Controls"
                             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
-                            x:Class="MAUIBrowser.MainPage"
+                            x:Class="MAUIBrowser.Pages.MainPage"
                             xmlns:vm="clr-namespace:MAUIBrowser.ViewModels"
                             xmlns:pages="clr-namespace:MAUIBrowser.Pages"
                             BackgroundColor="#D3D3D3"
-                            x:Name="page"
                             Shell.NavBarIsVisible="False"
                             NavigationPage.HasNavigationBar="False"
                             BindingContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}">
@@ -26,7 +24,7 @@
     </uranium:UraniumContentPage.Resources>
 
     <pages:HomePanelView/>
-
+    
 </uranium:UraniumContentPage>
 
 

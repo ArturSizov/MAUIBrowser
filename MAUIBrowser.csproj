@@ -52,12 +52,13 @@
 	  <None Remove="Resources\Images\forward.png" />
 	  <None Remove="Resources\Images\google.png" />
 	  <None Remove="Resources\Images\left.gif" />
+	  <None Remove="Resources\Images\maui_logo.webp" />
 	  <None Remove="Resources\Images\refresh.gif" />
 	  <None Remove="Resources\Images\settings.gif" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Prism.Core" Version="8.1.97" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
 		<PackageReference Include="UraniumUI.Blurs" Version="2.5.5" />
 		<PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.5.5" />
 		<PackageReference Include="UraniumUI.Material" Version="2.5.5" />
@@ -72,14 +73,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="CustomControls\Controls\SearchEntryControls.xaml">
+	  <MauiXaml Update="Pages\BottomControlsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\BrowserTabPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\HomePanelView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\TabsCollectionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionMAUIBrowserHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+	<ItemGroup>
+	  <Folder Include="CustomControls\Controls\" />
+	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionMAUIBrowserHideInfoBar="True" XamarinHotReloadGenericExceptionInfoBarMAUIBrowserHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIBrowser.Pages.BrowserTabPage"
+             xmlns:views="clr-namespace:MAUIBrowser.Pages"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=BrowserTabPageModel}"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="50,105*, 50">
+
+        <WebView Grid.Row="1" Source="{Binding Url}"/>
+        
+        <Border Grid.Row="2">
+            <views:BottomControlsView />
+        </Border>
+    </Grid>
+
+</ContentView>

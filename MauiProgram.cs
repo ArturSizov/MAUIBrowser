@@ -3,6 +3,10 @@ using InputKit.Shared.Controls;
 using UraniumUI;
 using MAUIBrowser.ViewModels;
 using MAUIBrowser.Auxiliary;
+using MAUIBrowser.Abstractions;
+using MAUIBrowser.Services;
+using MAUIBrowser.State;
+using CommunityToolkit.Maui;
 
 namespace MAUIBrowser;
 
@@ -17,17 +21,24 @@ public static class MauiProgram
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
             .UseUraniumUIBlurs()
+			.UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFontAwesomeIconFonts();
+				fonts.AddMaterialIconFonts();
 
             });
 
 		builder.Services.AddMopupsDialogs()
-			.AddSingleton<MainPageViewModel>()
-			.AddSingleton<HomePanelViewModel>();
+			.AddSingleton<ITabsPopupService, TabsPopupService>()
+			.AddSingleton<BrowserState>()
+            .AddSingleton<MainPageViewModel>()
+			.AddSingleton<BrowserTabPageModel>()
+			.AddTransient<HomePanelViewModel>()
+			.AddSingleton<BottomControlsViewModel>()
+			.AddSingleton<TabsCollectionPageModel>();
 		
 
 		var app = builder.Build();

@@ -1,16 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MAUIBrowser.Auxiliary;
+using MAUIBrowser.Models;
+using MAUIBrowser.Pages;
+using MAUIBrowser.State;
+using System.Windows.Input;
 
 namespace MAUIBrowser.ViewModels
 {
-    public class HomePanelViewModel
+    public class HomePanelViewModel : BindableObject
     {
+        #region Private property 
+        private BrowserState browserState;
+        private string url = string.Empty;
+
+        #endregion
         #region Public property 
         public string Title => "MAUI Browser";
-        public string Url { get; set; } = "https://www.google.com/";
+        public string Url
+        {
+            get => url; 
+            set
+            {
+                url = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        public HomePanelViewModel(BrowserState browserState)
+        {
+            this.browserState = browserState;
+        }
+        #region Commands 
+        public ICommand EnterAddressCommand => new Command<string>((url) =>
+        {
+            if (Application.Current?.MainPage is not ContentPage contentPage)
+                return;
+
+            var target = WebViewSourceBuilder.Create(url);
+
+            var tab = new TabInfoModel
+            {
+                Url = target,
+                Title = url,
+                Content = new BrowserTabPage
+                {
+                    BindingContext = new BrowserTabPageModel { Url = target },
+                }
+            };
+
+            if (browserState.CurrentTab != null)
+            {
+                var index = browserState.Tabs.IndexOf(browserState.CurrentTab);
+
+                if (index != -1)
+                    browserState.Tabs[index] = tab;
+            }
+            else
+                browserState.Tabs.Add(tab);
+
+            browserState.CurrentTab = tab;
+
+            contentPage.Content = tab.Content;
+        });
         #endregion
     }
 }

@@ -2,11 +2,40 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUIBrowser.Pages.HomePanelView"
-             BindingContext="{Binding Source={StaticResource Locator}, Path=HomePageViewModel}">
-    <VerticalStackLayout>
-        <Label 
-            Text="{Binding Title}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:views="clr-namespace:MAUIBrowser.Pages"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=HomePanelViewModel}"
+             BackgroundColor="White">
+    
+     <Grid RowDefinitions="140, *, 40">
+        <VerticalStackLayout Grid.Row="0">
+            <Image Source="maui_logo.webp"
+                   WidthRequest="350"/>
+            <Label Text="{Binding Title}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="#808080"/>
+        </VerticalStackLayout>
+       
+         
+        <material:TextField Grid.Row="1"
+                            Title="Веедите url или запрос"
+                            Icon="google.png"
+                            VerticalOptions="Center"
+                            Padding="15"
+                            Margin="0,-250,0,0"
+                            Keyboard="Url"
+                            Text="{Binding Url}"
+                            BorderColor="#808080"
+                            TextColor="Black"
+                            AccentColor="#808080"
+                            TitleColor="#808080"
+                            ReturnCommand="{Binding EnterAddressCommand}"
+                            ReturnCommandParameter="{Binding Url}"
+                            AllowClear="True"/>
+         
+        <views:BottomControlsView Grid.Row="3"/>
+    </Grid>
 </ContentView>

@@ -4,12 +4,14 @@
              xmlns:local="clr-namespace:MAUIBrowser"
              xmlns:material="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"
              x:Class="MAUIBrowser.App"
+             xmlns:converters="clr-namespace:MAUIBrowser.Converters"
              xmlns:vm="clr-namespace:MAUIBrowser.ViewModels.Locator">
     <Application.Resources>
         <ResourceDictionary>
 
-            <vm:ViewModelLocator x:Key="Locator"></vm:ViewModelLocator>
-            
+            <vm:ViewModelLocator x:Key="Locator"/>
+            <converters:TabsCountToStringConverter x:Key="TabsCountToStringConverter"/>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
