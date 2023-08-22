@@ -2,12 +2,23 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUIBrowser.Pages.BrowserTabPage"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:views="clr-namespace:MAUIBrowser.Pages"
              BindingContext="{Binding Source={StaticResource Locator}, Path=BrowserTabPageModel}"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="White">
 
-    <Grid RowDefinitions="50,105*, 50">
-
+    <Grid RowDefinitions="45,105*, 50">
+        <Border Grid.Row="0"
+                Margin="1"
+                VerticalOptions="Center" 
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 5,5,5,5" >
+            <Entry Text="{Binding Url}"
+                   HeightRequest="35"
+                   ReturnCommand="{Binding EnterAddressCommand}"/>
+        </Border>
+        
         <WebView Grid.Row="1" Source="{Binding Url}"/>
         
         <Border Grid.Row="2">

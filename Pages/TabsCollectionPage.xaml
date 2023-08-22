@@ -11,13 +11,18 @@
                xmlns:vm="clr-namespace:MAUIBrowser.ViewModels"
                xmlns:views="clr-namespace:MAUIBrowser.Pages"
                Size="300,400"
-               Color="Transparent" 
+               Color="White" 
                BindingContext="{Binding Source={StaticResource Locator}, Path=TabsCollectionPageModel}">
 
     <Border BackgroundColor="{StaticResource Gray100}">
-        <Grid RowDefinitions="40, *" HorizontalOptions="Center">
+        <Grid RowDefinitions="40, *" 
+              HorizontalOptions="Center">
 
-            <Image Grid.Row="0" WidthRequest="20" HeightRequest="20" Margin="5" HorizontalOptions="Start">
+            <Image Grid.Row="0" 
+                   WidthRequest="20" 
+                   HeightRequest="20" 
+                   Margin="5" 
+                   HorizontalOptions="Start">
                 <Image.Source>
                     <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Add}" Color="Black" />
                 </Image.Source>
@@ -28,12 +33,18 @@
             </Image>
 
             <ScrollView Grid.Row="1">
-                <CollectionView  ItemsSource="{Binding BrowserState.Tabs}" SelectionMode="Single" SelectionChangedCommand="{Binding TabSelectedCommand}" SelectedItem="{Binding SelectedTab}">
+                <CollectionView  ItemsSource="{Binding BrowserState.Tabs}" SelectionMode="Single" 
+                                 SelectionChangedCommand="{Binding TabSelectedCommand}" 
+                                 SelectedItem="{Binding SelectedTab}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="5" WidthRequest="150" HeightRequest="90" BackgroundColor="{StaticResource PrimaryContainer}" HorizontalOptions="Center">
+                            <Border Margin="5" WidthRequest="150" 
+                                    HeightRequest="90" 
+                                    BackgroundColor="{StaticResource PrimaryContainer}" 
+                                    HorizontalOptions="Center">
 
-                                <Grid RowDefinitions="20, 10*,10*" Margin="5">
+                                <Grid RowDefinitions="20, 10*,10*" 
+                                      Margin="5">
 
                                     <Grid Grid.Row="0" ColumnDefinitions="*,20">
                                         <ImageButton Grid.Column="1"
@@ -84,9 +95,6 @@
 
                 </CollectionView>
             </ScrollView>
-
-
-
         </Grid>
 
         <Border.StrokeShape>

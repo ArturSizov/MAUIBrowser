@@ -1,4 +1,4 @@
-using MAUIBrowser.Auxiliary;
+using MAUIBrowser.ViewModels;
 
 namespace MAUIBrowser.Pages;
 

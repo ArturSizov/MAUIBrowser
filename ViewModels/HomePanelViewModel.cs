@@ -13,6 +13,7 @@ namespace MAUIBrowser.ViewModels
         private string url = string.Empty;
 
         #endregion
+
         #region Public property 
         public string Title => "MAUI Browser";
         public string Url
@@ -44,7 +45,7 @@ namespace MAUIBrowser.ViewModels
                 Title = url,
                 Content = new BrowserTabPage
                 {
-                    BindingContext = new BrowserTabPageModel { Url = target },
+                    BindingContext = new BrowserTabPageModel { Url = target }
                 }
             };
 
@@ -61,6 +62,7 @@ namespace MAUIBrowser.ViewModels
             browserState.CurrentTab = tab;
 
             contentPage.Content = tab.Content;
+
         });
         #endregion
     }

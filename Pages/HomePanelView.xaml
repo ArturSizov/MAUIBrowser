@@ -18,9 +18,9 @@
                    FontAttributes="Bold"
                    TextColor="#808080"/>
         </VerticalStackLayout>
-       
-         
-        <material:TextField Grid.Row="1"
+
+
+        <!--<material:TextField Grid.Row="1"
                             Title="Веедите url или запрос"
                             Icon="google.png"
                             VerticalOptions="Center"
@@ -34,8 +34,15 @@
                             TitleColor="#808080"
                             ReturnCommand="{Binding EnterAddressCommand}"
                             ReturnCommandParameter="{Binding Url}"
-                            AllowClear="True"/>
+                            AllowClear="True"/>-->
+        <Entry Grid.Row="1" Margin="5"
+                    Text="{Binding Url}"
+                    Placeholder="Please enter url"
+                    ReturnCommand="{Binding EnterAddressCommand}"
+                    ReturnCommandParameter="{Binding Url}"/>
          
-        <views:BottomControlsView Grid.Row="3"/>
+        <views:BottomControlsView Grid.Row="2"/>
+
+        
     </Grid>
 </ContentView>

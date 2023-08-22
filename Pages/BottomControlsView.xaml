@@ -9,44 +9,65 @@
 
     <Grid ColumnDefinitions="20*,20*,20*,20*,20*">
 
-        <ImageButton Grid.Column="0" WidthRequest="18" HeightRequest="18" Margin="5">
+        <ImageButton Grid.Column="0" 
+                     WidthRequest="25" 
+                     HeightRequest="25" 
+                     Margin="5"
+                     Command="{Binding GoBackCommand}">
             <ImageButton.Source>
-                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Arrow_back_ios}" Color="DarkSlateGrey" />
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Arrow_back_ios}" 
+                                 Color="DarkSlateGrey" />
             </ImageButton.Source>
         </ImageButton>
 
-        <ImageButton Grid.Column="1" WidthRequest="18" HeightRequest="18" Margin="5" >
+        <ImageButton Grid.Column="1" 
+                     WidthRequest="25" 
+                     HeightRequest="25" 
+                     Margin="5" >
             <ImageButton.Source>
-                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Arrow_forward_ios}" Color="DarkSlateGrey" />
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Arrow_forward_ios}" 
+                                 Color="DarkSlateGrey" />
             </ImageButton.Source>
         </ImageButton>
 
-        <Image Grid.Column="2" WidthRequest="20" HeightRequest="20" Margin="5">
-            <Image.Source>
-                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Home_filled}" Color="DarkSlateGrey" />
-            </Image.Source>
+        <ImageButton Grid.Column="2" 
+                     WidthRequest="28" 
+                     HeightRequest="28" 
+                     Margin="5"
+                     Command="{Binding OpenHomeCommand}">
+            <ImageButton.Source>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Home_filled}" 
+                                 Color="DarkSlateGrey" />
+            </ImageButton.Source>
+        </ImageButton>
 
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding OpenHomeCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
+        <ImageButton Grid.Column="3"
+                     ZIndex="1"  
+                     WidthRequest="28" 
+                     HeightRequest="28" 
+                     Margin="5" 
+                     Source="tabs.png"
+                     Command="{Binding OpenTabsCommand}">
+        </ImageButton>
 
-        <Image ZIndex="1" Grid.Column="3" WidthRequest="20" HeightRequest="20" Margin="5" Source="tabs.png">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding OpenTabsCommand}" />
-            </Image.GestureRecognizers>
-        </Image>
-
-        <Label ZIndex="0" Grid.Column="3" Padding="0,3,3,0"
+        <Label Grid.Column="3"
+               TextColor="Black"
+               ZIndex="0"  
+               Padding="0,3,3,0"
                Text="{Binding BrowserState.Tabs.Count, Converter={StaticResource TabsCountToStringConverter}}"
-               FontSize="8" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center">
+               FontSize="12" 
+               FontAttributes="Bold" 
+               VerticalOptions="Center" 
+               HorizontalOptions="Center">
         </Label>
 
-        <Image Grid.Column="4" WidthRequest="25" HeightRequest="25" Margin="5">
-            <Image.Source>
+        <ImageButton Grid.Column="4" 
+               WidthRequest="28" 
+               HeightRequest="28" 
+               Margin="5">
+            <ImageButton.Source>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Settings}" Color="DarkSlateGrey" />
-            </Image.Source>
-        </Image>
-
+            </ImageButton.Source>
+        </ImageButton>
     </Grid>
 </ContentView>

@@ -1,4 +1,4 @@
-﻿using MAUIBrowser.Auxiliary;
+﻿using System.Windows.Input;
 
 namespace MAUIBrowser.ViewModels
 {
@@ -8,8 +8,8 @@ namespace MAUIBrowser.ViewModels
         private string url = string.Empty;
 
         #endregion
+
         #region Public property 
-        public string Title => "MAUI Browser";
         public string Url
         {
             get => url; 
@@ -20,12 +20,13 @@ namespace MAUIBrowser.ViewModels
             }
         }
         #endregion
-        #region Events 
-        private void AddressEntryCompleted(object sender, EventArgs e)
+
+        #region Commands 
+        public ICommand EnterAddressCommand => new Command(()=>
         {
-            var url = WebViewSourceBuilder.Create(Url);
-            Url = url;
-        }
-        #endregion
+            OnPropertyChanged(nameof(Url));
+        });
+
+      #endregion
     }
 }

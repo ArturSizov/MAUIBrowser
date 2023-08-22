@@ -1,4 +1,7 @@
-﻿namespace MAUIBrowser.ViewModels;
+﻿using MAUIBrowser.Pages;
+using System.Windows.Input;
+
+namespace MAUIBrowser.ViewModels;
 public class MainPageViewModel : BindableObject
 {
     #region Private property 

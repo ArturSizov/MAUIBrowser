@@ -1,5 +1,4 @@
 ﻿using Mopups.Hosting;
-using InputKit.Shared.Controls;
 using UraniumUI;
 using MAUIBrowser.ViewModels;
 using MAUIBrowser.Auxiliary;
@@ -7,6 +6,7 @@ using MAUIBrowser.Abstractions;
 using MAUIBrowser.Services;
 using MAUIBrowser.State;
 using CommunityToolkit.Maui;
+using MAUIBrowser.Pages;
 
 namespace MAUIBrowser;
 
@@ -33,6 +33,9 @@ public static class MauiProgram
 
 		builder.Services.AddMopupsDialogs()
 			.AddSingleton<ITabsPopupService, TabsPopupService>()
+
+            .AddTransient<MainPage>()
+
 			.AddSingleton<BrowserState>()
             .AddSingleton<MainPageViewModel>()
 			.AddSingleton<BrowserTabPageModel>()

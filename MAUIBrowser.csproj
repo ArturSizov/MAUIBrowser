@@ -51,10 +51,8 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\forward.png" />
 	  <None Remove="Resources\Images\google.png" />
-	  <None Remove="Resources\Images\left.gif" />
 	  <None Remove="Resources\Images\maui_logo.webp" />
-	  <None Remove="Resources\Images\refresh.gif" />
-	  <None Remove="Resources\Images\settings.gif" />
+	  <None Remove="Resources\Images\tabs.png" />
 	</ItemGroup>
 
 	<ItemGroup>

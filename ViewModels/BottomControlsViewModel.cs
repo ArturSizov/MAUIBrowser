@@ -31,12 +31,12 @@ namespace MAUIBrowser.ViewModels
         }
 
         #region Commands 
-        public ICommand GoBackCommand => new Command(async () =>
+        public ICommand GoBackCommand => new Command(async() =>
         {
             if (Application.Current?.MainPage == null)
                 return;
 
-            await Application.Current.MainPage.Navigation.PopAsync(true);
+            await Shell.Current.DisplayAlert("О программе", "Программа для напоминаний о днях рождений", "Ok");
         });
 
         public ICommand OpenHomeCommand => new Command(() =>

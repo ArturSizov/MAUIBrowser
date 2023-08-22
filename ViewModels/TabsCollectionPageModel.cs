@@ -14,10 +14,11 @@ namespace MAUIBrowser.ViewModels
         private readonly ITabsPopupService popupService;
         #endregion
 
-        #region Private property 
+        #region Public property 
         public TabInfoModel SelectedTab
         {
-            get => selectedTab; set
+            get => selectedTab; 
+            set
             {
                 selectedTab = value;
                 OnPropertyChanged();

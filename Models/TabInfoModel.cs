@@ -29,7 +29,7 @@
         }
         public ContentView Content
         {
-            get => content!; 
+            get => content; 
             set
             {
                 content = value;
