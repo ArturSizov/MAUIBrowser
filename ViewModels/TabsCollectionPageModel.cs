@@ -62,7 +62,7 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Single page delete command
         /// </summary>
-        public ICommand DeleteTabCommand => new Command<TabInfoModel>(async (tab) =>
+        public ICommand DeleteTabCommand => new Command<TabInfoModel>(async(tab) =>
         {
             if (tab == null)
                 return;

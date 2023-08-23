@@ -22,7 +22,6 @@ namespace MAUIBrowser.Services
             if (WebView.CanGoBack)
                 WebView.GoBack();
             else contentPage.Content = new HomePanelView();
-
         }
 
         /// <summary>

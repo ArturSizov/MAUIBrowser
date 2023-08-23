@@ -19,8 +19,8 @@
               HorizontalOptions="Center">
 
             <Image Grid.Row="0" 
-                   WidthRequest="20" 
-                   HeightRequest="20" 
+                   WidthRequest="25" 
+                   HeightRequest="25" 
                    Margin="5" 
                    HorizontalOptions="Start">
                 <Image.Source>

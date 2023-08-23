@@ -1,19 +1,18 @@
-﻿using MAUIBrowser.Abstractions;
-using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Views;
+using MAUIBrowser.Abstractions;
 using MAUIBrowser.Pages;
 
 namespace MAUIBrowser.Services
 {
-    public class TabsPopupService : ITabsPopupService
+    public class SettingsPopupServices : ISettingsPopupServices
     {
-
         #region Private property 
         private Popup? popup;
 
         private bool disposed;
+
+       
         #endregion
-
-
         #region Methods 
         /// <summary>
         /// Show popup window
@@ -25,27 +24,16 @@ namespace MAUIBrowser.Services
                 return;
 
             disposed = false;
-            popup = new TabsCollectionPage();
+            popup = new SettingsView();
             popup.Closed += PopupClosed;
 
             await Application.Current.MainPage.ShowPopupAsync(popup);
         }
 
-        /// <summary>
-        /// Closed window
-        /// </summary>
-        /// <returns></returns>
-        public async Task CloseAsync()
+        public Task CloseAsync()
         {
-            if (popup == null)
-                return;
-
-            if (!disposed)
-                await popup.CloseAsync();
-
-            popup = null;
+            throw new NotImplementedException();
         }
-
 
         // Closed popup window
         private void PopupClosed(object? sender, CommunityToolkit.Maui.Core.PopupClosedEventArgs e)

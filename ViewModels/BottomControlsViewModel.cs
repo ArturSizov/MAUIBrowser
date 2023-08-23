@@ -12,6 +12,7 @@ namespace MAUIBrowser.ViewModels
         private BrowserState browserState = new();
         private ITabsPopupService popupService;
         private IWebViewServices web;
+
         #endregion
 
         #region Public property 
@@ -34,22 +35,32 @@ namespace MAUIBrowser.ViewModels
         }
 
         #region Commands 
+        /// <summary>
+        /// Go Back Web View command
+        /// </summary>
         public ICommand GoBackCommand => new Command(() =>
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
 
             web.GoBack();
+
         });
 
+        /// <summary>
+        ///   Go Forward Web View command
+        /// </summary>
         public ICommand GoForwardCommand => new Command(() =>
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
 
-            web.GoForward();
+           web.GoForward();
         });
 
+        /// <summary>
+        /// Open Home view command 
+        /// </summary>
         public ICommand OpenHomeCommand => new Command(() =>
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
@@ -59,7 +70,21 @@ namespace MAUIBrowser.ViewModels
             BrowserState.CurrentTab = null;
         });
 
+        /// <summary>
+        /// Open show tab view command
+        /// </summary>
         public ICommand OpenTabsCommand => new Command(async () =>
+        {
+            if (Application.Current?.MainPage == null)
+                return;
+
+            await popupService.ShowAsync();
+        });
+
+        /// <summary>
+        /// Open show settings view command
+        /// </summary>
+        public ICommand OpenSettingsCommand => new Command(async() =>
         {
             if (Application.Current?.MainPage == null)
                 return;
