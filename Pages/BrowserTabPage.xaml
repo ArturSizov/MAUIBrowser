@@ -25,7 +25,8 @@
                    ReturnType="Search"/>
         </Border>
 
-        <WebView Grid.Row="1" Source="{Binding Url, Mode=TwoWay}">
+        <WebView Grid.Row="1" x:Name="wv"
+                 Source="{Binding Url, Mode=TwoWay}">
             <WebView.Behaviors>
                 <toolkit:EventToCommandBehavior
                          x:TypeArguments="WebNavigatedEventArgs"

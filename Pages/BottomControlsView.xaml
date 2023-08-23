@@ -23,7 +23,8 @@
         <ImageButton Grid.Column="1" 
                      WidthRequest="25" 
                      HeightRequest="25" 
-                     Margin="5" >
+                     Margin="5" 
+                     Command="{Binding GoForwardCommand}">
             <ImageButton.Source>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Arrow_forward_ios}" 
                                  Color="DarkSlateGrey" />

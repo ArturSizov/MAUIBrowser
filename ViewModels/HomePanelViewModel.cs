@@ -1,4 +1,5 @@
-﻿using MAUIBrowser.Auxiliary;
+﻿using MAUIBrowser.Abstractions;
+using MAUIBrowser.Auxiliary;
 using MAUIBrowser.Models;
 using MAUIBrowser.Pages;
 using MAUIBrowser.State;
@@ -9,13 +10,13 @@ namespace MAUIBrowser.ViewModels
     public class HomePanelViewModel : BindableObject
     {
         #region Private property 
+        private IWebViewServices web;
         private BrowserState browserState;
         private string url = string.Empty;
 
         #endregion
 
         #region Public property 
-        public string Title => "MAUI Browser";
         public string Url
         {
             get => url; 
@@ -27,8 +28,9 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public HomePanelViewModel(BrowserState browserState)
+        public HomePanelViewModel(BrowserState browserState, IWebViewServices web)
         {
+            this.web = web;
             this.browserState = browserState;
         }
         #region Commands
@@ -47,7 +49,7 @@ namespace MAUIBrowser.ViewModels
             {
                 Url = target ,
                 Title = url,
-                Content = new BrowserTabPage() 
+                Content = new BrowserTabPage(web) 
                 {
                     BindingContext = new BrowserTabPageModel
                     {

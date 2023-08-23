@@ -11,8 +11,7 @@ namespace MAUIBrowser.ViewModels
         #region Private property 
         private BrowserState browserState = new();
         private ITabsPopupService popupService;
-        private int countBack;
-        private WebView webView = new();
+        private IWebViewServices web;
         #endregion
 
         #region Public property 
@@ -27,9 +26,10 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public BottomControlsViewModel(ITabsPopupService popupService, BrowserState browserState)
+        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices web, BrowserState browserState)
         {
             this.popupService = popupService;
+            this.web = web;
             BrowserState = browserState;
         }
 
@@ -38,9 +38,16 @@ namespace MAUIBrowser.ViewModels
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
-            var url = browserState.Links[countBack - 1];
-            contentPage.Content = contentPage.Content;
 
+            web.GoBack();
+        });
+
+        public ICommand GoForwardCommand => new Command(() =>
+        {
+            if (Application.Current?.MainPage is not ContentPage contentPage)
+                return;
+
+            web.GoForward();
         });
 
         public ICommand OpenHomeCommand => new Command(() =>
@@ -48,7 +55,6 @@ namespace MAUIBrowser.ViewModels
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
 
-            countBack++;
             contentPage.Content = new HomePanelView();
             BrowserState.CurrentTab = null;
         });

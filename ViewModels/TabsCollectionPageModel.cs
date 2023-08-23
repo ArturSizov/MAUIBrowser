@@ -15,6 +15,8 @@ namespace MAUIBrowser.ViewModels
         #endregion
 
         #region Public property 
+        public BrowserState BrowserState { get; }
+
         public TabInfoModel SelectedTab
         {
             get => selectedTab; 
@@ -27,15 +29,16 @@ namespace MAUIBrowser.ViewModels
 
         #endregion
 
-        public BrowserState BrowserState { get; }
-
         public TabsCollectionPageModel(ITabsPopupService popupService, BrowserState browserState)
         {
             this.popupService = popupService;
             BrowserState = browserState;
         }
 
-        #region Commands 
+        #region Commands
+        /// <summary>
+        /// Blank page creation command
+        /// </summary>
         public ICommand CreateTabCommand => new Command(async () =>
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
@@ -56,6 +59,9 @@ namespace MAUIBrowser.ViewModels
             contentPage.Content = tab.Content;
         });
 
+        /// <summary>
+        /// Single page delete command
+        /// </summary>
         public ICommand DeleteTabCommand => new Command<TabInfoModel>(async (tab) =>
         {
             if (tab == null)
@@ -71,7 +77,9 @@ namespace MAUIBrowser.ViewModels
             }
         });
 
-
+        /// <summary>
+        /// Command to add a new page
+        /// </summary>
         public ICommand TabSelectedCommand => new Command(async () =>
         {
             if (SelectedTab == null || Application.Current?.MainPage is not ContentPage contentPage)

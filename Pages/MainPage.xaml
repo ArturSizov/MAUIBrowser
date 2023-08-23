@@ -14,8 +14,7 @@
                             xmlns:pages="clr-namespace:MAUIBrowser.Pages"
                             BackgroundColor="#D3D3D3"
                             Shell.NavBarIsVisible="False"
-                            NavigationPage.HasNavigationBar="False"
-                            BindingContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}">
+                            NavigationPage.HasNavigationBar="False">
 
     <uranium:UraniumContentPage.Resources>
         <Style TargetType="Frame">

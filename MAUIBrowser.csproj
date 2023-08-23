@@ -49,6 +49,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="CustomControls\**" />
+	  <Compile Remove="CustomControls\**" />
+	  <EmbeddedResource Remove="CustomControls\**" />
+	  <MauiCss Remove="CustomControls\**" />
+	  <MauiXaml Remove="CustomControls\**" />
+	  <None Remove="CustomControls\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Images\close.png" />
 	  <None Remove="Resources\Images\forward.png" />
 	  <None Remove="Resources\Images\google.png" />
@@ -84,10 +93,6 @@
 	  <MauiXaml Update="Pages\TabsCollectionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="CustomControls\Controls\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionMAUIBrowserHideInfoBar="True" XamarinHotReloadGenericExceptionInfoBarMAUIBrowserHideInfoBar="True" /></VisualStudio></ProjectExtensions>

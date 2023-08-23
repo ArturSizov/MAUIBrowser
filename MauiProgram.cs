@@ -44,6 +44,7 @@ public static class MauiProgram
 
             // register Services
             .AddSingleton<ITabsPopupService, TabsPopupService>()
+			.AddSingleton<IWebViewServices, WebViewServices>()
             .AddSingleton<BrowserState>()
 
             // register Pages
@@ -51,7 +52,6 @@ public static class MauiProgram
             .AddTransient<BrowserTabPage>()
 
             // register ViewModels
-            .AddSingleton<MainPageViewModel>()
 			.AddSingleton<BrowserTabPageModel>()
 			.AddTransient<HomePanelViewModel>()
 			.AddSingleton<BottomControlsViewModel>()

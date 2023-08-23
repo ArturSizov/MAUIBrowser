@@ -6,11 +6,6 @@ namespace MAUIBrowser.ViewModels
 {
     public class BrowserTabPageModel : BindableObject
     {
-        #region Private property 
-        private string url = string.Empty;
-        private BrowserState state;
-        #endregion
-
         #region Public property 
         public string Url { get; set; } = string.Empty;
         public string EntryUrl { get; set; } = string.Empty;
@@ -21,7 +16,11 @@ namespace MAUIBrowser.ViewModels
             OnPropertyChanged(nameof(EntryUrl));
         }
         #endregion
+
         #region Commands 
+        /// <summary>
+        /// Enter entry address command
+        /// </summary>
         public ICommand EnterAddressCommand => new Command(() =>
         {
             var url = WebViewSourceBuilder.Create(EntryUrl);
@@ -30,6 +29,10 @@ namespace MAUIBrowser.ViewModels
             OnPropertyChanged(nameof(EntryUrl));
             OnPropertyChanged(nameof(Url));
         });
+
+        /// <summary>
+        /// Refresh entry command
+        /// </summary>
         public ICommand AddressEntryCompleted => new Command<Microsoft.Maui.Controls.WebNavigatedEventArgs>((args) =>
         {
             if (args.Source is not UrlWebViewSource source)
