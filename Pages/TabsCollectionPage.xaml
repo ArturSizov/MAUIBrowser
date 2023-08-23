@@ -11,7 +11,7 @@
                xmlns:vm="clr-namespace:MAUIBrowser.ViewModels"
                xmlns:views="clr-namespace:MAUIBrowser.Pages"
                Size="300,400"
-               Color="White" 
+               Color="Transparent" 
                BindingContext="{Binding Source={StaticResource Locator}, Path=TabsCollectionPageModel}">
 
     <Border BackgroundColor="{StaticResource Gray100}">
@@ -33,14 +33,15 @@
             </Image>
 
             <ScrollView Grid.Row="1">
-                <CollectionView  ItemsSource="{Binding BrowserState.Tabs}" SelectionMode="Single" 
+                <CollectionView  ItemsSource="{Binding BrowserState.Tabs}" 
+                                 SelectionMode="Single" 
                                  SelectionChangedCommand="{Binding TabSelectedCommand}" 
                                  SelectedItem="{Binding SelectedTab}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="5" WidthRequest="150" 
                                     HeightRequest="90" 
-                                    BackgroundColor="{StaticResource PrimaryContainer}" 
+                                    BackgroundColor="White" 
                                     HorizontalOptions="Center">
 
                                 <Grid RowDefinitions="20, 10*,10*" 
@@ -67,7 +68,7 @@
 
                                     <Label Grid.Row="2" 
                                            HorizontalOptions="Center"
-                                           Text="{Binding Url}"
+                                           Text="{Binding Url.Url}"
                                            LineBreakMode="TailTruncation"
                                            MaxLines="1"/>
 
@@ -91,8 +92,6 @@
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-
-
                 </CollectionView>
             </ScrollView>
         </Grid>

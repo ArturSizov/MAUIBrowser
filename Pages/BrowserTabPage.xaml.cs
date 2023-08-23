@@ -1,5 +1,3 @@
-using MAUIBrowser.ViewModels;
-
 namespace MAUIBrowser.Pages;
 
 public partial class BrowserTabPage : ContentView

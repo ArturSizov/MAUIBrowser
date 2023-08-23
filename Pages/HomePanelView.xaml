@@ -36,7 +36,7 @@
                             ReturnCommandParameter="{Binding Url}"
                             AllowClear="True"/>-->
         <Entry Grid.Row="1" Margin="5"
-                    Text="{Binding Url}"
+                    Text="{Binding Url, Mode=TwoWay}"
                     Placeholder="Please enter url"
                     ReturnCommand="{Binding EnterAddressCommand}"
                     ReturnCommandParameter="{Binding Url}"/>

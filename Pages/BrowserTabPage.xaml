@@ -4,6 +4,7 @@
              x:Class="MAUIBrowser.Pages.BrowserTabPage"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:views="clr-namespace:MAUIBrowser.Pages"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BindingContext="{Binding Source={StaticResource Locator}, Path=BrowserTabPageModel}"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="White">
@@ -14,13 +15,19 @@
                 VerticalOptions="Center" 
                 StrokeThickness="2"
                 StrokeShape="RoundRectangle 5,5,5,5" >
-            <Entry Text="{Binding Url}"
-                   HeightRequest="35"
-                   ReturnCommand="{Binding EnterAddressCommand}"/>
+            <Entry HeightRequest="37" x:Name="entry"
+                   Text="{Binding Url.Url, Mode=TwoWay}"/>
         </Border>
-        
-        <WebView Grid.Row="1" Source="{Binding Url}"/>
-        
+
+        <WebView x:Name="webView" Grid.Row="1" Source="{Binding Url, Mode=TwoWay}">
+            <WebView.Behaviors>
+                <toolkit:EventToCommandBehavior
+                         x:TypeArguments="WebNavigatedEventArgs"
+                         EventName="Navigated"
+                         Command="{Binding AddressEntryCompleted}"/>
+            </WebView.Behaviors>
+        </WebView>
+
         <Border Grid.Row="2">
             <views:BottomControlsView />
         </Border>

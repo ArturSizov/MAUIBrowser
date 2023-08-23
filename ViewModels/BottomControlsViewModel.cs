@@ -1,4 +1,5 @@
 ﻿using MAUIBrowser.Abstractions;
+using MAUIBrowser.Models;
 using MAUIBrowser.Pages;
 using MAUIBrowser.State;
 using System.Windows.Input;
@@ -10,6 +11,8 @@ namespace MAUIBrowser.ViewModels
         #region Private property 
         private BrowserState browserState = new();
         private ITabsPopupService popupService;
+        private int countBack;
+        private WebView webView = new();
         #endregion
 
         #region Public property 
@@ -31,12 +34,13 @@ namespace MAUIBrowser.ViewModels
         }
 
         #region Commands 
-        public ICommand GoBackCommand => new Command(async() =>
+        public ICommand GoBackCommand => new Command(() =>
         {
-            if (Application.Current?.MainPage == null)
+            if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
+            var url = browserState.Links[countBack - 1];
+            contentPage.Content = contentPage.Content;
 
-            await Shell.Current.DisplayAlert("О программе", "Программа для напоминаний о днях рождений", "Ok");
         });
 
         public ICommand OpenHomeCommand => new Command(() =>
@@ -44,6 +48,7 @@ namespace MAUIBrowser.ViewModels
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
 
+            countBack++;
             contentPage.Content = new HomePanelView();
             BrowserState.CurrentTab = null;
         });

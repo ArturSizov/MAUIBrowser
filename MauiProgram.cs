@@ -32,11 +32,16 @@ public static class MauiProgram
             });
 
 		builder.Services.AddMopupsDialogs()
-			.AddSingleton<ITabsPopupService, TabsPopupService>()
 
+            // register Services
+            .AddSingleton<ITabsPopupService, TabsPopupService>()
+            .AddSingleton<BrowserState>()
+
+            // register Pages
             .AddTransient<MainPage>()
+            .AddTransient<BrowserTabPage>()
 
-			.AddSingleton<BrowserState>()
+            // register ViewModels
             .AddSingleton<MainPageViewModel>()
 			.AddSingleton<BrowserTabPageModel>()
 			.AddTransient<HomePanelViewModel>()

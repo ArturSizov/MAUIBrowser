@@ -4,7 +4,7 @@
     {
         #region Private property 
         private string title = string.Empty;
-        private string url = string.Empty;
+        private UrlWebViewSource url;
         private ContentView content = new();
         #endregion
 
@@ -18,7 +18,7 @@
                 OnPropertyChanged();
             }
         }
-        public string Url
+        public UrlWebViewSource Url
         {
             get => url; 
             set

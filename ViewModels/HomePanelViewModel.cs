@@ -31,7 +31,11 @@ namespace MAUIBrowser.ViewModels
         {
             this.browserState = browserState;
         }
-        #region Commands 
+        #region Commands
+
+        /// <summary>
+        /// Enter address command
+        /// </summary>
         public ICommand EnterAddressCommand => new Command<string>((url) =>
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
@@ -41,11 +45,14 @@ namespace MAUIBrowser.ViewModels
 
             var tab = new TabInfoModel
             {
-                Url = target,
+                Url = new UrlWebViewSource() { Url = target },
                 Title = url,
-                Content = new BrowserTabPage
+                Content = new BrowserTabPage() 
                 {
-                    BindingContext = new BrowserTabPageModel { Url = target }
+                    BindingContext = new BrowserTabPageModel
+                    {
+                        Url = new UrlWebViewSource() { Url = target }
+                    }
                 }
             };
 
@@ -56,6 +63,7 @@ namespace MAUIBrowser.ViewModels
                 if (index != -1)
                     browserState.Tabs[index] = tab;
             }
+
             else
                 browserState.Tabs.Add(tab);
 

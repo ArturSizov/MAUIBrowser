@@ -49,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\close.png" />
 	  <None Remove="Resources\Images\forward.png" />
 	  <None Remove="Resources\Images\google.png" />
 	  <None Remove="Resources\Images\maui_logo.webp" />
