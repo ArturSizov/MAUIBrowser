@@ -7,6 +7,9 @@ using MAUIBrowser.Services;
 using MAUIBrowser.State;
 using CommunityToolkit.Maui;
 using MAUIBrowser.Pages;
+#if ANDROID
+	using MAUIBrowser.Platforms.Android.Handlers;
+#endif
 
 namespace MAUIBrowser;
 
@@ -29,6 +32,12 @@ public static class MauiProgram
                 fonts.AddFontAwesomeIconFonts();
 				fonts.AddMaterialIconFonts();
 
+            })
+            .ConfigureMauiHandlers(handlers =>
+            {
+#if ANDROID
+                handlers.AddHandler(typeof(Entry), typeof(CustomEntryHandler)); // removes the underline
+#endif
             });
 
 		builder.Services.AddMopupsDialogs()

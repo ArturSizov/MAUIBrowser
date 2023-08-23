@@ -45,13 +45,13 @@ namespace MAUIBrowser.ViewModels
 
             var tab = new TabInfoModel
             {
-                Url = new UrlWebViewSource() { Url = target },
+                Url = target ,
                 Title = url,
                 Content = new BrowserTabPage() 
                 {
                     BindingContext = new BrowserTabPageModel
                     {
-                        Url = new UrlWebViewSource() { Url = target }
+                        Url =  target
                     }
                 }
             };

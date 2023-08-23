@@ -46,7 +46,7 @@ namespace MAUIBrowser.ViewModels
             var tab = new TabInfoModel
             {
                 Title = "Home",
-                Url = new UrlWebViewSource() { Url = "" },
+                Url = string.Empty,
                 Content = new HomePanelView()
             };
 

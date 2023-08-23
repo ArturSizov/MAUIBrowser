@@ -11,15 +11,21 @@
 
     <Grid RowDefinitions="45,105*, 50">
         <Border Grid.Row="0"
-                Margin="1"
+                Margin="0"
+                Padding="2"
                 VerticalOptions="Center" 
                 StrokeThickness="2"
                 StrokeShape="RoundRectangle 5,5,5,5" >
-            <Entry HeightRequest="37" x:Name="entry"
-                   Text="{Binding Url.Url, Mode=TwoWay}"/>
+            <Entry HeightRequest="37"
+                   HorizontalTextAlignment="Start"
+                   Margin="1"
+                   Text="{Binding EntryUrl, Mode=TwoWay}"
+                   ReturnCommand="{Binding EnterAddressCommand}"
+                   CursorPosition="0"
+                   ReturnType="Search"/>
         </Border>
 
-        <WebView x:Name="webView" Grid.Row="1" Source="{Binding Url, Mode=TwoWay}">
+        <WebView Grid.Row="1" Source="{Binding Url, Mode=TwoWay}">
             <WebView.Behaviors>
                 <toolkit:EventToCommandBehavior
                          x:TypeArguments="WebNavigatedEventArgs"

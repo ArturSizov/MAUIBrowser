@@ -6,7 +6,6 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new MAUIBrowser.Pages.MainPage();
-		//MainPage = new AppShell();
-	}
+		MainPage = new Pages.MainPage(); // AppShell();                                        
+    }
 }
