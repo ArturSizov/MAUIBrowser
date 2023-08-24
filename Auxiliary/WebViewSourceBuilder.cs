@@ -8,6 +8,8 @@ namespace MAUIBrowser.Auxiliary
         {
             if (Uri.TryCreate(request, UriKind.Absolute, out _))
                 return request;
+            if(request is not null)
+                request = request.Replace(" ", "+");
 
             if (request.Split('.').Length == 1 && request.Split(' ').Length == 1)
                 return $"https://www.google.com/search?q={request}";
