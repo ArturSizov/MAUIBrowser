@@ -21,12 +21,11 @@
                    Margin="1"
                    Text="{Binding EntryUrl, Mode=TwoWay}"
                    ReturnCommand="{Binding EnterAddressCommand}"
-                   CursorPosition="0"
                    ReturnType="Search"/>
         </Border>
 
         <WebView Grid.Row="1" x:Name="wv"
-                 Source="{Binding Url, Mode=TwoWay}">
+                 Source="{Binding Url, Mode=OneWay}" >
             <WebView.Behaviors>
                 <toolkit:EventToCommandBehavior
                          x:TypeArguments="WebNavigatedEventArgs"

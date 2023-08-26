@@ -7,8 +7,8 @@ namespace MAUIBrowser.ViewModels.Locator
         public HomePanelViewModel HomePanelViewModel => RootContainer.Container.Resolve<HomePanelViewModel>();
         public BrowserTabPageModel BrowserTabPageModel => RootContainer.Container.Resolve<BrowserTabPageModel>();
         public BottomControlsViewModel BottomControlsViewModel => RootContainer.Container.Resolve<BottomControlsViewModel>();
-        public TabsCollectionPageModel TabsCollectionPageModel => RootContainer.Container.Resolve<TabsCollectionPageModel>();
-        public SettingsViewModel SettingsViewModel => RootContainer.Container.Resolve<SettingsViewModel>();
+        public TabsCollectionPopupModel TabsCollectionPopupModel => RootContainer.Container.Resolve<TabsCollectionPopupModel>();
+        public HistoryPopupViewModel HistoryPopupViewModel => RootContainer.Container.Resolve<HistoryPopupViewModel>();
 
     }
 }

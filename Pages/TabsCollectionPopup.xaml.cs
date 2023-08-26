@@ -2,9 +2,9 @@ using CommunityToolkit.Maui.Views;
 
 namespace MAUIBrowser.Pages;
 
-public partial class TabsCollectionPage : Popup
+public partial class TabsCollectionPopup : Popup
 {
-	public TabsCollectionPage()
+	public TabsCollectionPopup()
 	{
 		InitializeComponent();
 	}

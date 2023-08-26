@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace MAUIBrowser.ViewModels
 {
-    public class TabsCollectionPageModel : BindableObject
+    public class TabsCollectionPopupModel : BindableObject
     {
 
         #region Private property 
@@ -29,7 +29,7 @@ namespace MAUIBrowser.ViewModels
 
         #endregion
 
-        public TabsCollectionPageModel(ITabsPopupService popupService, BrowserState browserState)
+        public TabsCollectionPopupModel(ITabsPopupService popupService, BrowserState browserState)
         {
             this.popupService = popupService;
             BrowserState = browserState;
@@ -39,7 +39,7 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Blank page creation command
         /// </summary>
-        public ICommand CreateTabCommand => new Command(async () =>
+        public ICommand CreateTabCommand => new Command(async() =>
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
@@ -80,7 +80,7 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Command to add a new page
         /// </summary>
-        public ICommand TabSelectedCommand => new Command(async () =>
+        public ICommand TabSelectedCommand => new Command(async() =>
         {
             if (SelectedTab == null || Application.Current?.MainPage is not ContentPage contentPage)
                 return;

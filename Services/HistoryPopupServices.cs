@@ -1,18 +1,17 @@
 ﻿using CommunityToolkit.Maui.Views;
 using MAUIBrowser.Abstractions;
+using MAUIBrowser.Models;
 using MAUIBrowser.Pages;
 
 namespace MAUIBrowser.Services
 {
-    public class SettingsPopupServices : ISettingsPopupServices
+    public class HistoryPopupServices : IHistoryPopupServices
     {
         #region Private property 
         private Popup? popup;
-
         private bool disposed;
-
-       
         #endregion
+
         #region Methods 
         /// <summary>
         /// Show popup window
@@ -24,15 +23,25 @@ namespace MAUIBrowser.Services
                 return;
 
             disposed = false;
-            popup = new SettingsView();
+            popup = new HistoryPopupView();
             popup.Closed += PopupClosed;
 
             await Application.Current.MainPage.ShowPopupAsync(popup);
         }
 
-        public Task CloseAsync()
+        /// <summary>
+        /// Closed window
+        /// </summary>
+        /// <returns></returns>
+        public async Task CloseAsync()
         {
-            throw new NotImplementedException();
+            if (popup == null)
+                return;
+
+            if (!disposed)
+                await popup.CloseAsync();
+
+            popup = null;
         }
 
         // Closed popup window

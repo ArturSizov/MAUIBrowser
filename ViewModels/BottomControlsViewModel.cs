@@ -12,7 +12,7 @@ namespace MAUIBrowser.ViewModels
         private BrowserState browserState = new();
         private ITabsPopupService popupService;
         private IWebViewServices web;
-
+        private IHistoryPopupServices hisPopup;
         #endregion
 
         #region Public property 
@@ -27,10 +27,11 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices web, BrowserState browserState)
+        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices web, BrowserState browserState, IHistoryPopupServices hisPopup)
         {
             this.popupService = popupService;
             this.web = web;
+            this.hisPopup = hisPopup;
             BrowserState = browserState;
         }
 
@@ -84,12 +85,12 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Open show settings view command
         /// </summary>
-        public ICommand OpenSettingsCommand => new Command(async() =>
+        public ICommand OpenHistoryCommand => new Command(async() =>
         {
             if (Application.Current?.MainPage == null)
                 return;
 
-            await popupService.ShowAsync();
+            await hisPopup.ShowAsync();
         });
         #endregion
     }

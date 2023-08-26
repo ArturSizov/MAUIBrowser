@@ -1,6 +1,6 @@
 ﻿namespace MAUIBrowser.Abstractions
 {
-    public interface ISettingsPopupServices
+    public interface IHistoryPopupServices
     {
         Task ShowAsync();
         Task CloseAsync();

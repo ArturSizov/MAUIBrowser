@@ -4,6 +4,11 @@ namespace MAUIBrowser.Auxiliary
 {
     public static class WebViewSourceBuilder
     {
+        /// <summary>
+        /// Create new url
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public static string Create(string request)
         {
             if (Uri.TryCreate(request, UriKind.Absolute, out _))

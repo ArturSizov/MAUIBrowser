@@ -9,7 +9,6 @@ namespace MAUIBrowser.Services
 
         #region Private property 
         private Popup? popup;
-
         private bool disposed;
         #endregion
 
@@ -25,7 +24,7 @@ namespace MAUIBrowser.Services
                 return;
 
             disposed = false;
-            popup = new TabsCollectionPage();
+            popup = new TabsCollectionPopup();
             popup.Closed += PopupClosed;
 
             await Application.Current.MainPage.ShowPopupAsync(popup);

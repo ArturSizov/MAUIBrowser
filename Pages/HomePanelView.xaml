@@ -36,15 +36,8 @@
                             ReturnCommandParameter="{Binding Url}"
                             AllowClear="True"
                             ReturnType="Search"/>
-        <!--<Entry Grid.Row="1" Margin="5"
-                    Text="{Binding Url, Mode=TwoWay}"
-                    Placeholder="Please enter url"
-                    ReturnCommand="{Binding EnterAddressCommand}"
-                    ReturnCommandParameter="{Binding Url}"
-                    ReturnType="Search"/>-->
-         
+
         <views:BottomControlsView Grid.Row="2"/>
 
-        
     </Grid>
 </ContentView>

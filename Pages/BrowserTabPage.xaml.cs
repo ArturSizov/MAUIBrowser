@@ -7,6 +7,7 @@ public partial class BrowserTabPage : ContentView
 	public BrowserTabPage(IWebViewServices web)
 	{
 		InitializeComponent();
-        web.WebView = wv; //for navigation
-    }
+
+		web.WebView = wv; //for navigation
+	}
 }

@@ -1,21 +1,31 @@
-﻿using MAUIBrowser.Auxiliary;
+﻿using MAUIBrowser.Abstractions;
+using MAUIBrowser.Auxiliary;
+using MAUIBrowser.Models;
+using MAUIBrowser.Pages;
 using MAUIBrowser.State;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace MAUIBrowser.ViewModels
 {
     public class BrowserTabPageModel : BindableObject
     {
+        #region Private property 
+        private BrowserState state;
+        #endregion
+
         #region Public property 
         public string Url { get; set; } = string.Empty;
         public string EntryUrl { get; set; } = string.Empty;
+        #endregion
 
-        public BrowserTabPageModel()
+        public BrowserTabPageModel(BrowserState state)
         {
-            EntryUrl = Url;
+            this.state = state;
+            EntryUrl = Url; 
+            OnPropertyChanged(nameof(Url));
             OnPropertyChanged(nameof(EntryUrl));
         }
-        #endregion
 
         #region Commands 
         /// <summary>
@@ -33,15 +43,29 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Refresh entry command
         /// </summary>
-        public ICommand AddressEntryCompleted => new Command<Microsoft.Maui.Controls.WebNavigatedEventArgs>((args) =>
+        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>((args) =>
         {
             if (args.Source is not UrlWebViewSource source)
                 return;
-            
-            Url = source.Url;
-            EntryUrl = source.Url;
+            if (args is null)
+                return;
+
+            var result = state.Histories.Any(h => h.Url == args.Url);
+            if (!result)
+            {
+                Url = source.Url;
+                EntryUrl = Url;
+
+                state.AddHistory(new HistoryModel
+                {
+                    Date = DateTime.Now,
+                    Url = Url
+                });
+            }
+            args = null;
             OnPropertyChanged(nameof(EntryUrl));
-        });  
+        });
+        
         #endregion
     }
 }

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:attachment="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+               xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+               xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+               xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+               xmlns:vm="clr-namespace:MAUIBrowser.ViewModels"
+               x:Class="MAUIBrowser.Pages.HistoryPopupView"
+               Color="Transparent"
+               Size="350,550"
+               BindingContext="{Binding Source={StaticResource Locator}, Path=HistoryPopupViewModel}">
+
+
+    <Border BackgroundColor="White">
+        <Grid RowDefinitions="40, *, 50">
+            <Label Grid.Row="0"
+                   Text="История просмотра"
+                   Margin="10"
+                   FontSize="15"
+                   FontAttributes="Bold"
+                   TextColor="#C0C0C0"/>
+            <Label Grid.RowSpan="3" 
+                   Text="Список пуст"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding BrowserState.Histories.Count, Converter={StaticResource LabelIsVisibleConverter}}"/>
+            <ImageButton Grid.Row="0" 
+                         WidthRequest="25" 
+                         HeightRequest="25" 
+                         Margin="5" 
+                         HorizontalOptions="End"
+                         Command="{Binding CloseCommand}">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Close}" Color="Black" />
+                </ImageButton.Source>
+            </ImageButton>
+
+            <ScrollView Grid.Row="1">
+                <CollectionView  
+                     ItemsSource="{Binding BrowserState.Histories}" 
+                     SelectionMode="Single" 
+                     SelectionChangedCommand="{Binding HistorySelectedCommand}" 
+                     SelectedItem="{Binding SelectHistory}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="3" 
+                                    HeightRequest="60"
+                                    BackgroundColor="White" 
+                                    HorizontalOptions="FillAndExpand">
+
+                                <Grid RowDefinitions="20, 10*, 10*" 
+                                      Margin="1">
+                                    <Grid Grid.Row="0">
+                                        <ImageButton WidthRequest="22"
+                                                     HeightRequest="22"
+                                                     HorizontalOptions="End"
+                                                     VerticalOptions="Center"
+                                                     ZIndex="1"
+                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HistoryPopupViewModel}}, Path=DeleteHistoryCommand}"
+                                                     CommandParameter="{Binding .}">
+                                            <ImageButton.Source>
+                                                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Delete_forever}" 
+                                                                 Color="Red"/>
+                                            </ImageButton.Source>
+                                        </ImageButton>
+                                    </Grid>
+                                    <Label Grid.Row="0"
+                                           Text="{Binding Date}"/>
+
+                                    <Label Grid.Row="1" 
+                                           HorizontalOptions="Start"
+                                           Text="{Binding Url}"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="1"/>
+
+                                </Grid>
+
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="5" />
+                                </Border.StrokeShape>
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal" />
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="Stroke" Value="Green" />
+                                                <Setter Property="BackgroundColor" Value="#C0C0C0"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+            <Button Grid.Row="2"
+                    HorizontalOptions="End"
+                    Margin="5"
+                    WidthRequest="170"
+                    Text="Очистить список"
+                    TextColor="Red"
+                    BackgroundColor="#C0C0C0"
+                    Command="{Binding DeleteAllHistoryCommand}"/>
+        </Grid>
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="15" />
+        </Border.StrokeShape>
+    </Border>
+</toolkit:Popup>

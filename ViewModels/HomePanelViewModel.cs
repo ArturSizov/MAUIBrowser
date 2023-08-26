@@ -11,9 +11,8 @@ namespace MAUIBrowser.ViewModels
     {
         #region Private property 
         private IWebViewServices web;
-        private BrowserState browserState;
+        private BrowserState state;
         private string url = string.Empty;
-
         #endregion
 
         #region Public property 
@@ -28,10 +27,10 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public HomePanelViewModel(BrowserState browserState, IWebViewServices web)
+        public HomePanelViewModel(BrowserState state, IWebViewServices web)
         {
             this.web = web;
-            this.browserState = browserState;
+            this.state = state;
         }
         #region Commands
 
@@ -47,29 +46,30 @@ namespace MAUIBrowser.ViewModels
 
             var tab = new TabInfoModel
             {
-                Url = target ,
+                Url = target,
                 Title = url,
                 Content = new BrowserTabPage(web) 
                 {
-                    BindingContext = new BrowserTabPageModel
+                    BindingContext = new BrowserTabPageModel(state)
                     {
                         Url =  target
                     }
                 }
             };
 
-            if (browserState.CurrentTab != null)
+            if (state.CurrentTab != null)
             {
-                var index = browserState.Tabs.IndexOf(browserState.CurrentTab);
+                var index = state.Tabs.IndexOf(state.CurrentTab);
 
                 if (index != -1)
-                    browserState.Tabs[index] = tab;
+                    state.Tabs[index] = tab;
             }
 
             else
-                browserState.Tabs.Add(tab);
+                state.Tabs.Add(tab);
 
-            browserState.CurrentTab = tab;
+
+            state.CurrentTab = tab;
 
             contentPage.Content = tab.Content;
 

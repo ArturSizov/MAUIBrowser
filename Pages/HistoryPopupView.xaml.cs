@@ -2,9 +2,9 @@ using CommunityToolkit.Maui.Views;
 
 namespace MAUIBrowser.Pages;
 
-public partial class SettingsView : Popup
+public partial class HistoryPopupView : Popup
 {
-	public SettingsView()
+	public HistoryPopupView()
 	{
 		InitializeComponent();
 	}

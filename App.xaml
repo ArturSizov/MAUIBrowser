@@ -11,6 +11,7 @@
 
             <vm:ViewModelLocator x:Key="Locator"/>
             <converters:TabsCountToStringConverter x:Key="TabsCountToStringConverter"/>
+            <converters:LabelIsVisibleConverter x:Key="LabelIsVisibleConverter"/>
             
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />

@@ -78,6 +78,12 @@
 	  <Compile Update="Pages\HomePanelView.xaml.cs">
 	    <DependentUpon>HomePanelView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\HistoryPopupView.xaml.cs">
+	    <DependentUpon>HistoryPopupView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\TabsCollectionPopup.xaml.cs">
+	    <DependentUpon>TabsCollectionPopup.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -90,10 +96,10 @@
 	  <MauiXaml Update="Pages\HomePanelView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\SettingsView.xaml">
+	  <MauiXaml Update="Pages\HistoryPopupView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\TabsCollectionPage.xaml">
+	  <MauiXaml Update="Pages\TabsCollectionPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
