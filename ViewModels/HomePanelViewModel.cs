@@ -15,6 +15,8 @@ namespace MAUIBrowser.ViewModels
         private BrowserState state;
         private string url = string.Empty;
         private SearchEngineModel searchEngine;
+        private ISettingsService settings;
+
         #endregion
 
         #region Public property 
@@ -36,34 +38,18 @@ namespace MAUIBrowser.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public ObservableCollection<SearchEngineModel> SearchEngines { get; set; }
+
+        private int count;
         #endregion
 
-        public HomePanelViewModel(BrowserState state, IWebViewServices web)
+        public HomePanelViewModel(BrowserState state, IWebViewServices web, ISettingsService settings)
         {
-            SearchEngines = new ObservableCollection<SearchEngineModel>
-            {
-                new SearchEngineModel
-                {
-                    Image = "google.png",
-                    SearchQuery = "https://www.google.com/search?q="
-                },
-                new SearchEngineModel
-                {
-                    Image = "firefox.png",
-                    SearchQuery = "https://nova.rambler.ru/search?query="
-                },
-                new SearchEngineModel
-                {
-                    Image = "yandex.png",
-                    SearchQuery = "https://ya.ru/search/?text="
-                }
-            };
-
-            SearchEngine = SearchEngines[0];
-
+            this.settings = settings;
             this.web = web;
             this.state = state;
+            Task.Run(async()=> await LoadingAppAsync());
         }
         #region Commands
 
@@ -111,14 +97,48 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public ICommand InstallASearchSystemCommand => new Command<SearchEngineModel>((ser) =>
+        public ICommand InstallASearchSystemCommand => new Command<SearchEngineModel>(async (ser) =>
         {
             if (ser != null)
             {
                 SearchEngine = ser;
                 WebViewSourceBuilder.SearchString = SearchEngine.SearchQuery;
+
+                var index = SearchEngines.IndexOf(SearchEngine);
+
+                count = index;
+
+                await settings.SaveSettings(nameof(count), count);
             }   
         });
+
+        private async Task LoadingAppAsync()
+        {
+            SearchEngines = new ObservableCollection<SearchEngineModel>
+            {
+                new SearchEngineModel
+                {
+                    Image = "google.png",
+                    SearchQuery = "https://www.google.com/search?q="
+                },
+                new SearchEngineModel
+                {
+                    Image = "rambler.png",
+                    SearchQuery = "https://nova.rambler.ru/search?query="
+                },
+                new SearchEngineModel
+                {
+                    Image = "yandex.png",
+                    SearchQuery = "https://ya.ru/search/?text="
+                }
+            };
+
+            count = await settings.GetSettings<int>(nameof(count), 0);
+
+            SearchEngine = SearchEngines[count];
+
+            WebViewSourceBuilder.SearchString = SearchEngine.SearchQuery;
+        }
         #endregion
     }
 }

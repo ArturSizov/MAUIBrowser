@@ -53,6 +53,7 @@ public static class MauiProgram
 			.AddSingleton<IWebViewServices, WebViewServices>()
 			.AddSingleton<IHistoryPopupServices, HistoryPopupServices>()
 			.AddSingleton<BrowserState>()
+			.AddSingleton<ISettingsService, SettingsService>()
             
 
 			// register Pages
