@@ -88,6 +88,7 @@ namespace MAUIBrowser.ViewModels
             BrowserState.CurrentTab = SelectedTab;
 
             contentPage.Content = SelectedTab.Content;
+
             await popupService.CloseAsync();
         });
 

@@ -27,14 +27,12 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices web, BrowserState browserState, IHistoryPopupServices hisPopup,
-            IHistoryData<HistoryModel> data)
+        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices web, BrowserState browserState, IHistoryPopupServices hisPopup)
         {
             this.popupService = popupService;
             this.web = web;
             this.hisPopup = hisPopup;
             BrowserState = browserState;
-            BrowserState = new(data);
         }
 
         #region Commands 

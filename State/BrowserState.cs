@@ -16,11 +16,7 @@ namespace MAUIBrowser.State
         public ObservableCollection<TabInfoModel> Tabs { get; } = new();
         public ObservableCollection<HistoryModel> Histories { get; set; } = new();
 
-        public TabInfoModel CurrentTab;
-
-        public HistoryModel CurrentHistory;
-        
-
+        public TabInfoModel? CurrentTab;
         #endregion
 
         public BrowserState(IHistoryData<HistoryModel> data)
