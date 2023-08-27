@@ -67,7 +67,6 @@ namespace MAUIBrowser.ViewModels
             args = null;
             OnPropertyChanged(nameof(EntryUrl));
         });
-        
         #endregion
     }
 }

@@ -30,7 +30,7 @@
                             AllowClear="True"
                             ReturnType="Search"/>
 
-            <Label Text="Какой поисковой системой хоитите пользоваться?"
+            <Label Text="Какой поисковой системой хотите пользоваться?"
                    VerticalOptions="Start"
                    HorizontalOptions="Start"
                    Margin="15,0,0,0"
