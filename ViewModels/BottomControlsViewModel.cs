@@ -9,7 +9,7 @@ namespace MAUIBrowser.ViewModels
     public class BottomControlsViewModel : BindableObject
     {
         #region Private property 
-        private BrowserState browserState = new();
+        private BrowserState browserState;
         private ITabsPopupService popupService;
         private IWebViewServices web;
         private IHistoryPopupServices hisPopup;
@@ -27,12 +27,14 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices web, BrowserState browserState, IHistoryPopupServices hisPopup)
+        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices web, BrowserState browserState, IHistoryPopupServices hisPopup,
+            IHistoryData<HistoryModel> data)
         {
             this.popupService = popupService;
             this.web = web;
             this.hisPopup = hisPopup;
             BrowserState = browserState;
+            BrowserState = new(data);
         }
 
         #region Commands 

@@ -31,11 +31,16 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Enter entry address command
         /// </summary>
-        public ICommand EnterAddressCommand => new Command(() =>
+        public ICommand EnterAddressCommand => new Command(async () =>
         {
             var url = WebViewSourceBuilder.Create(EntryUrl);
             Url = url;
             EntryUrl = url;
+            await state.Insert(new HistoryModel
+            {
+                Date = DateTime.Now,
+                Url = Url
+            });
             OnPropertyChanged(nameof(EntryUrl));
             OnPropertyChanged(nameof(Url));
         });
@@ -43,7 +48,7 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Refresh entry command
         /// </summary>
-        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>((args) =>
+        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>(async (args) =>
         {
             if (args.Source is not UrlWebViewSource source)
                 return;
@@ -56,7 +61,7 @@ namespace MAUIBrowser.ViewModels
                 Url = source.Url;
                 EntryUrl = Url;
 
-                state.AddHistory(new HistoryModel
+               await state.Insert(new HistoryModel
                 {
                     Date = DateTime.Now,
                     Url = Url
