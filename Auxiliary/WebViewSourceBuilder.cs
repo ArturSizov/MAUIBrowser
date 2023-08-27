@@ -1,9 +1,11 @@
 ﻿using System.Net;
+using static System.Net.WebRequestMethods;
 
 namespace MAUIBrowser.Auxiliary
 {
     public static class WebViewSourceBuilder
     {
+        public static string SearchString { get; set; } = "https://www.google.com/search?q=";
         /// <summary>
         /// Create new url
         /// </summary>
@@ -17,13 +19,13 @@ namespace MAUIBrowser.Auxiliary
                 request = request.Replace(" ", "+");
 
             if (request.Split('.').Length == 1 && request.Split(' ').Length == 1)
-                return $"https://www.google.com/search?q={request}";
+                return $"{SearchString}+{request}";
 
             var testUrl = $"https://{request}";
             if (Uri.TryCreate(testUrl, UriKind.Absolute, out var uri) && UrlExists(uri))
                 return testUrl;
 
-            return $"https://www.google.com/search?q={request}";
+            return $"{SearchString}+{request}";
         }
 
         private static bool UrlExists(Uri uri)

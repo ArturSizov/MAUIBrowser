@@ -5,15 +5,15 @@ namespace MAUIBrowser.Pages;
 
 public partial class MainPage : UraniumContentPage
 {
-    private IWebViewServices web;
+	private IWebViewServices web;
 
-    public MainPage(IWebViewServices web)
-    {
-        this.web = web;
-        InitializeComponent();
+	public MainPage(IWebViewServices web)
+	{
+		this.web = web;
+		InitializeComponent();
 	}
-    protected override bool OnBackButtonPressed()
-    {
-        return web.GoBack();
-    }
+	protected override bool OnBackButtonPressed()
+	{
+		return web.GoBack();
+	}
 }

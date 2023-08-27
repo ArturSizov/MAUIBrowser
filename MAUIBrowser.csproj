@@ -39,7 +39,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -58,11 +57,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\close.png" />
 	  <None Remove="Resources\Images\forward.png" />
 	  <None Remove="Resources\Images\google.png" />
 	  <None Remove="Resources\Images\maui_logo.webp" />
-	  <None Remove="Resources\Images\tabs.png" />
+	  <None Remove="Resources\Images\Rambler.png" />
+	  <None Remove="Resources\Images\Yandex.png" />
 	</ItemGroup>
 
 	<ItemGroup>
