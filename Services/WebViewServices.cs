@@ -1,6 +1,7 @@
 ﻿using MAUIBrowser.Abstractions;
 using MAUIBrowser.Pages;
 using MAUIBrowser.State;
+using Microsoft.Maui.Controls;
 
 namespace MAUIBrowser.Services
 {
@@ -22,18 +23,22 @@ namespace MAUIBrowser.Services
         /// <summary>
         /// Return to previous page
         /// </summary>
-        public void GoBack()
+        public bool GoBack()
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
-                return;
+                return false;
 
             if (WebView.CanGoBack)
+            {
                 WebView.GoBack();
+                return true;
+            }
             else
             {
                 state.Tabs.Remove(state.CurrentTab);
                 state.CurrentTab = null;
                 contentPage.Content = new HomePanelView();
+                return false;
             }
         }
 

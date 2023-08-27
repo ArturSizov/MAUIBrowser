@@ -1,11 +1,13 @@
-﻿namespace MAUIBrowser;
+﻿using MAUIBrowser.Abstractions;
+
+namespace MAUIBrowser;
 
 public partial class App : Application
 {
-	public App()
+	public App(IWebViewServices web)
 	{
 		InitializeComponent();
 
-		MainPage = new Pages.MainPage(); // AppShell();                                        
+		MainPage = new Pages.MainPage(web); // AppShell();                                        
     }
 }
