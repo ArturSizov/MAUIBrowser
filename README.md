@@ -1,5 +1,4 @@
-# MAUIBrowser
-Браузер написанный на платформе .NET MAUI
+# MAUIBrowser. Браузер написанный на платформе .NET MAUI
 ![Screenshot_1](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/13fb74bd-ebec-4b70-9117-5aef9f4a6832)
 ![Screenshot_7](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/531d5f42-4175-41ad-bd20-b5367a71f48c)
 ![Screenshot_6](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/fb697097-5d32-43e2-8161-ceb9533b23ee)
