@@ -1,8 +1,9 @@
 # MAUIBrowser
-Браузер написанный на платформе .NET MAUI![Screenshot_1](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/4a53d02d-71ac-4c0d-9337-b971dd85c0f5)
-![Screenshot_2](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/dacd33fc-3709-4dc2-8176-ab9e8692fa14)
-![Screenshot_3](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/acaa5a08-0e39-4e4d-b059-f211c13be792)
-![Screenshot_4](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/aeea4af5-2d6c-41ff-8e7a-3216da45f8b2)
-![Screenshot_5](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/0fc1e802-8942-4d96-a536-6ee8613fe584)
-![Screenshot_6](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/95e02f3a-63df-4041-a487-cbfd587c4edc)
-![Screenshot_7](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/7fe8db27-80ce-4d7c-bbc8-4b9264e6a8c1)
+Браузер написанный на платформе .NET MAUI
+![Screenshot_1](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/13fb74bd-ebec-4b70-9117-5aef9f4a6832)
+![Screenshot_7](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/531d5f42-4175-41ad-bd20-b5367a71f48c)
+![Screenshot_6](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/fb697097-5d32-43e2-8161-ceb9533b23ee)
+![Screenshot_5](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/095a89ea-47fc-44ea-a6e9-9d51ae09eae3)
+![Screenshot_4](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/396354b6-ada4-44ab-8666-e2d97673db50)
+![Screenshot_3](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/97b24590-abe8-4d94-bfd1-0e672b072ab3)
+![Screenshot_2](https://github.com/ArturSizov/MAUIBrowser/assets/104059269/1a919d07-d610-4f3c-b923-2c12e15e8af0)
