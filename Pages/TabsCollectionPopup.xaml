@@ -43,7 +43,7 @@
                             <Border Margin="5" 
                                     HeightRequest="90" 
                                     BackgroundColor="White" 
-                                    HorizontalOptions="Center">
+                                    HorizontalOptions="FillAndExpand">
 
                                 <Grid RowDefinitions="20, 10*,10*" 
                                       Margin="5">

@@ -1,9 +1,6 @@
-﻿using MAUIBrowser.Abstractions;
-using MAUIBrowser.Auxiliary;
+﻿using MAUIBrowser.Auxiliary;
 using MAUIBrowser.Models;
-using MAUIBrowser.Pages;
 using MAUIBrowser.State;
-using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace MAUIBrowser.ViewModels
@@ -48,7 +45,7 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Refresh entry command
         /// </summary>
-        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>(async (args) =>
+        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>(async(args) =>
         {
             if (args.Source is not UrlWebViewSource source)
                 return;
