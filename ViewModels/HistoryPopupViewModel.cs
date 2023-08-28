@@ -57,9 +57,19 @@ namespace MAUIBrowser.ViewModels
                 BindingContext = new BrowserTabPageModel(BrowserState)
                 {
                     Url = SelectHistory.Url,
-                    EntryUrl = SelectHistory.Url
+                    EntryUrl = SelectHistory.Url,
+                    Title = SelectHistory.Title
                 }
             };
+
+            var tap = new TabInfoModel
+            {
+                Title = SelectHistory.Title,
+                Url = SelectHistory.Url
+            };
+
+            BrowserState.Tabs.Add(tap);
+
             SelectHistory = null;
             await setPopup.CloseAsync();
         });

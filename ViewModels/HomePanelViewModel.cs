@@ -71,7 +71,8 @@ namespace MAUIBrowser.ViewModels
                 {
                     BindingContext = new BrowserTabPageModel(state)
                     {
-                        Url =  target
+                        Url =  target,
+                        Title = Url
                     }
                 }
             };

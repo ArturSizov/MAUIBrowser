@@ -46,12 +46,12 @@
                      SelectedItem="{Binding SelectHistory}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="3" 
-                                    HeightRequest="60"
+                            <Border Margin="1" 
+                                    HeightRequest="70"
                                     BackgroundColor="White" 
                                     HorizontalOptions="FillAndExpand">
 
-                                <Grid RowDefinitions="20, 10*, 10*" 
+                                <Grid RowDefinitions="20, 30*, 30*, 10*" 
                                       Margin="1">
                                     <Grid Grid.Row="0">
                                         <ImageButton WidthRequest="22"
@@ -68,9 +68,13 @@
                                         </ImageButton>
                                     </Grid>
                                     <Label Grid.Row="0"
-                                           Text="{Binding Date}"/>
+                                           Text="{Binding Title}"
+                                           HorizontalOptions="Center"/>
+                                    <Label Grid.Row="1"
+                                           Text="{Binding Date, StringFormat='Просмотрено: {0:dd/MM/yyyy HH:mm:ss}'}"
+                                           HorizontalOptions="Center"/>
 
-                                    <Label Grid.Row="1" 
+                                    <Label Grid.Row="2" 
                                            HorizontalOptions="Start"
                                            Text="{Binding Url}"
                                            LineBreakMode="TailTruncation"
@@ -98,7 +102,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </ScrollView>
-            <Button Grid.Row="2"
+            <Button Grid.Row="3"
                     HorizontalOptions="End"
                     Margin="5"
                     WidthRequest="170"

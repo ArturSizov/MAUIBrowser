@@ -12,6 +12,7 @@ namespace MAUIBrowser.ViewModels
         #endregion
 
         #region Public property 
+        public string Title { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
         public string EntryUrl { get; set; } = string.Empty;
         #endregion
@@ -36,7 +37,8 @@ namespace MAUIBrowser.ViewModels
             await state.Insert(new HistoryModel
             {
                 Date = DateTime.Now,
-                Url = Url
+                Url = Url,
+                Title = Title
             });
             OnPropertyChanged(nameof(EntryUrl));
             OnPropertyChanged(nameof(Url));
@@ -61,7 +63,8 @@ namespace MAUIBrowser.ViewModels
                await state.Insert(new HistoryModel
                 {
                     Date = DateTime.Now,
-                    Url = Url
+                    Url = Url,
+                    Title = Title
                 });
             }
             args = null;
