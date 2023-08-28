@@ -8,7 +8,7 @@
              BindingContext="{Binding Source={StaticResource Locator}, Path=HomePanelViewModel}"
              BackgroundColor="White">
 
-    <Grid RowDefinitions="140, *, 40">
+    <Grid RowDefinitions="150, *, *, 50, 50">
         <Image Grid.Row="0"
                Source="maui_logo.webp"
                WidthRequest="350"/>
@@ -38,7 +38,7 @@
                    FontAttributes="Bold"
                    TextColor="#808080"/>
             <CollectionView ItemsLayout="HorizontalList"
-                            ItemsSource="{Binding SearchEngines}">
+                            ItemsSource="{Binding BrowserState.SearchEngines}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ImageButton
@@ -54,11 +54,58 @@
                         </ImageButton>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-                
             </CollectionView>
         </VerticalStackLayout>
-            
-        <views:BottomControlsView Grid.Row="2"/>
+
+        <FlexLayout Grid.Row="2" 
+                    BindableLayout.ItemsSource="{Binding BrowserState.Links}"
+                    AlignContent="Start"
+                    AlignItems="Start"
+                    Wrap="Wrap">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Border WidthRequest="60" 
+                            HeightRequest="60" 
+                            Margin="2">
+                        <StackLayout HorizontalOptions="Center" 
+                                     VerticalOptions="Center">
+                            <Image Source="{Binding IconSource}" 
+                                   WidthRequest="35" 
+                                   HeightRequest="35" />
+                            <Label Text="{Binding Title}" FontSize="10"
+                                   LineBreakMode="TailTruncation" 
+                                   MaxLines="1" />
+                        </StackLayout>
+
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=FastLinkCommand}" 
+                                                  CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+
+        <material:ButtonView Grid.Row="3"
+                             WidthRequest="50" 
+                             HeightRequest="50"
+                             Margin="15"
+                             HorizontalOptions="End"
+                             VerticalOptions="Center"
+                             PressedCommand="{Binding AddFastLinkCommand}">
+            <Label Text="+"
+                   FontSize="16" 
+                   FontAttributes="Bold"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"/>
+        </material:ButtonView>
+
+        <views:BottomControlsView Grid.Row="4"
+                                  VerticalOptions="End"/>
 
     </Grid>
 </ContentView>

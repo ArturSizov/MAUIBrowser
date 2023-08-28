@@ -5,21 +5,22 @@ using MAUIBrowser.Pages;
 using MAUIBrowser.State;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using UraniumUI.Dialogs.Mopups;
 
 namespace MAUIBrowser.ViewModels
 {
     public class HomePanelViewModel : BindableObject
     {
         #region Private property 
-        private IWebViewServices web;
-        private BrowserState state;
+        private IWebViewServices<WebView> web;
         private string url = string.Empty;
         private SearchEngineModel searchEngine;
         private ISettingsService settings;
-
+        private int count;
         #endregion
 
         #region Public property 
+        public BrowserState BrowserState { get; }
         public string Url
         {
             get => url; 
@@ -38,19 +39,16 @@ namespace MAUIBrowser.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public ObservableCollection<SearchEngineModel> SearchEngines { get; set; }
-
-        private int count;
         #endregion
 
-        public HomePanelViewModel(BrowserState state, IWebViewServices web, ISettingsService settings)
+        public HomePanelViewModel(BrowserState state, IWebViewServices<WebView> web, ISettingsService settings)
         {
             this.settings = settings;
             this.web = web;
-            this.state = state;
+            BrowserState = state;
             Task.Run(async()=> await LoadingAppAsync());
         }
+
         #region Commands
 
         /// <summary>
@@ -69,34 +67,35 @@ namespace MAUIBrowser.ViewModels
                 Title = url,
                 Content = new BrowserTabPage(web) 
                 {
-                    BindingContext = new BrowserTabPageModel(state)
+                    BindingContext = new BrowserTabPageModel(BrowserState)
                     {
                         Url =  target,
-                        Title = Url
+                        Title = Url,
+                        EntryUrl = target
                     }
                 }
             };
 
-            if (state.CurrentTab != null)
+            if (BrowserState.CurrentTab != null)
             {
-                var index = state.Tabs.IndexOf(state.CurrentTab);
+                var index = BrowserState.Tabs.IndexOf(BrowserState.CurrentTab);
 
                 if (index != -1)
-                    state.Tabs[index] = tab;
+                    BrowserState.Tabs[index] = tab;
             }
 
             else
-                state.Tabs.Add(tab);
+                BrowserState.Tabs.Add(tab);
 
 
-            state.CurrentTab = tab;
+            BrowserState.CurrentTab = tab;
 
             contentPage.Content = tab.Content;
 
         });
 
         /// <summary>
-        /// 
+        /// Postbox Replacement Command
         /// </summary>
         public ICommand InstallASearchSystemCommand => new Command<SearchEngineModel>(async (ser) =>
         {
@@ -105,7 +104,7 @@ namespace MAUIBrowser.ViewModels
                 SearchEngine = ser;
                 WebViewSourceBuilder.SearchString = SearchEngine.SearchQuery;
 
-                var index = SearchEngines.IndexOf(SearchEngine);
+                var index = BrowserState.SearchEngines.IndexOf(SearchEngine);
 
                 count = index;
 
@@ -113,30 +112,88 @@ namespace MAUIBrowser.ViewModels
             }   
         });
 
-        private async Task LoadingAppAsync()
+        /// <summary>
+        /// Fast link Command
+        /// </summary>
+        public ICommand FastLinkCommand => new Command<FastLinkModel>((fastLink) =>
         {
-            SearchEngines = new ObservableCollection<SearchEngineModel>
+            ApplyContent(fastLink.Title, fastLink.Url);
+        });
+
+        /// <summary>
+        /// Add fast link Command
+        /// </summary>
+        public ICommand AddFastLinkCommand => new Command<FastLinkModel>(async (fastLink) =>
+        {
+            if (Application.Current?.MainPage is not ContentPage contentPage)
+                return;
+
+            var title = await contentPage.DisplayTextPromptAsync("Пожалуйста, введите данные", "Uri или запрос", "Ok", "Отмена");
+
+            if (string.IsNullOrWhiteSpace(title))
+                return;
+
+            var source = WebViewSourceBuilder.Create(title);
+
+            // if user added full uri, use hostname as a title
+            if (Uri.TryCreate(title, UriKind.Absolute, out var uri) && uri != null)
+                title = uri.Host;
+
+            BrowserState.Links.Add(new()
             {
-                new SearchEngineModel
+                Title = title,
+                Url = source
+            });
+
+            OnPropertyChanged(nameof(BrowserState));
+            OnPropertyChanged(nameof(BrowserState.Links));
+        });
+        #endregion
+
+        #region Methods
+
+        //Content Applications
+        private void ApplyContent(string title, string url)
+        {
+            if (Application.Current?.MainPage is not ContentPage contentPage)
+                return;
+
+            var tab = new TabInfoModel
+            {
+                Url = url,
+                Title = title,
+                Content = new BrowserTabPage(web)
                 {
-                    Image = "google.png",
-                    SearchQuery = "https://www.google.com/search?q="
-                },
-                new SearchEngineModel
-                {
-                    Image = "rambler.png",
-                    SearchQuery = "https://nova.rambler.ru/search?query="
-                },
-                new SearchEngineModel
-                {
-                    Image = "yandex.png",
-                    SearchQuery = "https://ya.ru/search/?text="
+                    BindingContext = new BrowserTabPageModel(BrowserState)
+                    {
+                        Url = url,
+                        Title = title,
+                        EntryUrl = url
+                    }
                 }
             };
 
+            if (BrowserState.CurrentTab != null)
+            {
+                var index = BrowserState.Tabs.IndexOf(BrowserState.CurrentTab);
+
+                if (index != -1)
+                    BrowserState.Tabs[index] = tab;
+            }
+            else
+                BrowserState.Tabs.Add(tab);
+
+            BrowserState.CurrentTab = tab;
+
+            contentPage.Content = tab.Content;
+        }
+
+        //Load application
+        private async Task LoadingAppAsync()
+        {
             count = await settings.GetSettings<int>(nameof(count), 0);
 
-            SearchEngine = SearchEngines[count];
+            SearchEngine = BrowserState.SearchEngines[count];
 
             WebViewSourceBuilder.SearchString = SearchEngine.SearchQuery;
         }

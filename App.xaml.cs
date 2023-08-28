@@ -4,7 +4,7 @@ namespace MAUIBrowser;
 
 public partial class App : Application
 {
-	public App(IWebViewServices web)
+	public App(IWebViewServices<WebView> web)
 	{
 		InitializeComponent();
 

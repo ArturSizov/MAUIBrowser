@@ -1,5 +1,4 @@
 ﻿using MAUIBrowser.Abstractions;
-using MAUIBrowser.Models;
 using MAUIBrowser.Pages;
 using MAUIBrowser.State;
 using System.Windows.Input;
@@ -11,7 +10,7 @@ namespace MAUIBrowser.ViewModels
         #region Private property 
         private BrowserState browserState;
         private ITabsPopupService popupService;
-        private IWebViewServices web;
+        private IWebViewServices<WebView> web;
         private IHistoryPopupServices hisPopup;
         #endregion
 
@@ -27,7 +26,7 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices web, BrowserState browserState, IHistoryPopupServices hisPopup)
+        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices<WebView> web, BrowserState browserState, IHistoryPopupServices hisPopup)
         {
             this.popupService = popupService;
             this.web = web;

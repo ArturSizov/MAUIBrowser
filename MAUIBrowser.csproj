@@ -61,6 +61,7 @@
 	  <None Remove="Resources\Images\google.png" />
 	  <None Remove="Resources\Images\maui_logo.webp" />
 	  <None Remove="Resources\Images\Rambler.png" />
+	  <None Remove="Resources\Images\uranium.svg" />
 	  <None Remove="Resources\Images\Yandex.png" />
 	</ItemGroup>
 

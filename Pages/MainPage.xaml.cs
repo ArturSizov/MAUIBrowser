@@ -5,9 +5,9 @@ namespace MAUIBrowser.Pages;
 
 public partial class MainPage : UraniumContentPage
 {
-	private IWebViewServices web;
+	private IWebViewServices<WebView> web;
 
-	public MainPage(IWebViewServices web)
+	public MainPage(IWebViewServices<WebView> web)
 	{
 		this.web = web;
 		InitializeComponent();

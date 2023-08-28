@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Views;
 using MAUIBrowser.Abstractions;
-using MAUIBrowser.Models;
 using MAUIBrowser.Pages;
 
 namespace MAUIBrowser.Services

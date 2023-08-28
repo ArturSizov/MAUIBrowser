@@ -10,7 +10,7 @@ namespace MAUIBrowser.ViewModels
     {
         #region Private property 
         private IHistoryPopupServices setPopup;
-        private IWebViewServices web;
+        private IWebViewServices<WebView> web;
         private HistoryModel selectHistory;
         #endregion
 
@@ -27,7 +27,7 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public HistoryPopupViewModel(IHistoryPopupServices setPopup, BrowserState browserState, IWebViewServices web)
+        public HistoryPopupViewModel(IHistoryPopupServices setPopup, BrowserState browserState, IWebViewServices<WebView> web)
         {
             this.web = web;
             this.setPopup = setPopup;

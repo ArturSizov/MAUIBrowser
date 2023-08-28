@@ -1,12 +1,13 @@
 ﻿using MAUIBrowser.Abstractions;
 using MAUIBrowser.Models;
+using SQLite;
 
 namespace MAUIBrowser.DataAccessLayer.Implementations
 {
     public class HistoryData : IHistoryData<HistoryModel>
     {
         #region Private property 
-        private IDataProvider data;
+        private IDataProvider<SQLiteAsyncConnection> data;
         #endregion
 
         #region Public property 
@@ -14,7 +15,7 @@ namespace MAUIBrowser.DataAccessLayer.Implementations
 
         #endregion
 
-        public HistoryData(IDataProvider data)
+        public HistoryData(IDataProvider<SQLiteAsyncConnection> data)
         {
             this.data = data;
         }

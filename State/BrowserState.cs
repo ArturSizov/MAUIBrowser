@@ -17,6 +17,62 @@ namespace MAUIBrowser.State
         public ObservableCollection<HistoryModel> Histories { get; set; } = new();
 
         public TabInfoModel? CurrentTab;
+        public ObservableCollection<SearchEngineModel> SearchEngines { get; set; } = new()
+        {
+                new()
+                {
+                    Image = "google.png",
+                    SearchQuery = "https://www.google.com/search?q="
+                },
+                new()
+                {
+                    Image = "rambler.png",
+                    SearchQuery = "https://nova.rambler.ru/search?query="
+                },
+                new()
+                {
+                    Image = "yandex.png",
+                    SearchQuery = "https://ya.ru/search/?text="
+                }
+        };
+        public ObservableCollection<FastLinkModel> Links { get; set; } = new()
+        {
+            new()
+            {
+                Title = "Google",
+                Url = "https://google.com",
+            },
+            new()
+            {
+                Title = "github",
+                Url = "https://github.com",
+            },
+            new()
+            {
+                Title = "Яндекс",
+                Url = "https://ya.ru",
+            },
+            new()
+            {
+                Title = "Рамблер",
+                Url = "https://rambler.ru",
+            },
+            new()
+            {
+                Title = "Дзен",
+                Url = "https://dzen.ru",
+            },
+            new()
+            {
+                Title = "Пикабу",
+                Url = "https://pikabu.ru",
+            },
+            new()
+            {
+                Title = "ВКонтакте",
+                Url = "https://vk.ru",
+            }
+        };
         #endregion
 
         public BrowserState(IHistoryData<HistoryModel> data)
