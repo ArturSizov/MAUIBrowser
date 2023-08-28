@@ -25,25 +25,25 @@ namespace MAUIBrowser.DataAccessLayer.Implementations
         /// </summary>
         /// <param name="history"></param>
         /// <returns></returns>
-        public async Task Remove(HistoryModel history)
+        public async Task RemoveAsync(HistoryModel history)
         {
             if (DatabasePath is not null)
             {
-                await data.Init(DatabasePath);
+                await data.InitAsync(DatabasePath);
                 await data.Database.DeleteAsync(history);
             }
         }
 
         /// <summary>
-        /// Get one historyS 
+        /// Get one historys 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<HistoryModel> Get(int id)
+        public async Task<HistoryModel> GetAsync(int id)
         {
             if (DatabasePath is not null)
             {
-                await data.Init(DatabasePath);
+                await data.InitAsync(DatabasePath);
                 return await data.Database.Table<HistoryModel>().Where(i => i.Id == id).FirstOrDefaultAsync();
             }
             return new HistoryModel();
@@ -53,11 +53,11 @@ namespace MAUIBrowser.DataAccessLayer.Implementations
         /// Get all histories 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<HistoryModel>> GetAll()
+        public async Task<List<HistoryModel>> GetAllAsync()
         {
             if (DatabasePath is not null)
             {
-                await data.Init(DatabasePath);
+                await data.InitAsync(DatabasePath);
                 return await data.Database.Table<HistoryModel>().ToListAsync();
             }
             return new List<HistoryModel>();
@@ -68,11 +68,11 @@ namespace MAUIBrowser.DataAccessLayer.Implementations
         /// </summary>
         /// <param name="history"></param>
         /// <returns></returns>
-        public async Task Insert(HistoryModel history)
+        public async Task InsertAsync(HistoryModel history)
         {
             if (DatabasePath is not null)
             {
-                await data.Init(DatabasePath);
+                await data.InitAsync(DatabasePath);
                 await data.Database.InsertAsync(history);
             }
         }

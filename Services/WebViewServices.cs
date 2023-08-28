@@ -1,11 +1,10 @@
 ﻿using MAUIBrowser.Abstractions;
 using MAUIBrowser.Pages;
 using MAUIBrowser.State;
-using Microsoft.Maui.Controls;
 
 namespace MAUIBrowser.Services
 {
-    public class WebViewServices : IWebViewServices
+    public class WebViewServices : IWebViewServices<WebView>
     {
         #region Private property 
         private BrowserState state;

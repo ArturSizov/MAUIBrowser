@@ -4,7 +4,7 @@ using SQLite;
 
 namespace MAUIBrowser.DataAccessLayer.Context
 {
-    public class DataProvider : IDataProvider
+    public class DataProvider : IDataProvider<SQLiteAsyncConnection>
     {
         private const SQLiteOpenFlags flags = SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.SharedCache;
 
@@ -15,7 +15,7 @@ namespace MAUIBrowser.DataAccessLayer.Context
         /// </summary>
         /// <param name="databasePath"></param>
         /// <returns></returns>
-        public async Task Init(string databasePath)
+        public async Task InitAsync(string databasePath)
         {
             if (Database is not null)
                 return;

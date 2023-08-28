@@ -10,6 +10,7 @@ using MAUIBrowser.Pages;
 using MAUIBrowser.DataAccessLayer.Context;
 using MAUIBrowser.Models;
 using MAUIBrowser.DataAccessLayer.Implementations;
+using SQLite;
 #if ANDROID
 	using MAUIBrowser.Platforms.Android.Handlers;
 #endif
@@ -46,11 +47,11 @@ public static class MauiProgram
 		builder.Services.AddMopupsDialogs()
 
 			// register Services
-			.AddSingleton<IDataProvider, DataProvider>()
+			.AddSingleton<IDataProvider<SQLiteAsyncConnection>, DataProvider>()
 			.AddSingleton<IHistoryData<HistoryModel>, HistoryData>()
             .AddSingleton<IRepository<HistoryModel>, BrowserState>()
             .AddSingleton<ITabsPopupService, TabsPopupService>()
-			.AddSingleton<IWebViewServices, WebViewServices>()
+			.AddSingleton<IWebViewServices<WebView>, WebViewServices>()
 			.AddSingleton<IHistoryPopupServices, HistoryPopupServices>()
 			.AddSingleton<BrowserState>()
 			.AddSingleton<ISettingsService, SettingsService>()

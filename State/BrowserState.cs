@@ -31,7 +31,7 @@ namespace MAUIBrowser.State
         // Get all history
         private async Task<IList<HistoryModel>> GetAllHistory()
         {
-            return new ObservableCollection<HistoryModel>(await data.GetAll()).ToList();
+            return new ObservableCollection<HistoryModel>(await data.GetAllAsync()).ToList();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace MAUIBrowser.State
         public async Task Insert(HistoryModel history)
         {
             Histories.Add(history);
-            await data.Insert(history);
+            await data.InsertAsync(history);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace MAUIBrowser.State
         public async Task Remove(HistoryModel history)
         {
             Histories.Remove(history);
-            await data.Remove(history);
+            await data.RemoveAsync(history);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace MAUIBrowser.State
         {
             foreach (var item in Histories)
             {
-                await data.Remove(item);
+                await data.RemoveAsync(item);
             }
             Histories.Clear();
         }

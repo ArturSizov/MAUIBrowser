@@ -1,10 +1,18 @@
-﻿using SQLite;
-
-namespace MAUIBrowser.Abstractions
+﻿namespace MAUIBrowser.Abstractions
 {
-    public interface IDataProvider
+    /// <summary>
+    /// Implementing database initialization
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IDataProvider<T>
     {
-        public SQLiteAsyncConnection Database { get; set; }
-        public Task Init(string databasePath);
+        public T Database { get; set; }
+
+        /// <summary>
+        /// Initializes the database
+        /// </summary>
+        /// <param name="databasePath"></param>
+        /// <returns></returns>
+        public Task InitAsync(string databasePath);
     }
 }

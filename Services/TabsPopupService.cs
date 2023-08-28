@@ -6,7 +6,6 @@ namespace MAUIBrowser.Services
 {
     public class TabsPopupService : ITabsPopupService
     {
-
         #region Private property 
         private Popup? popup;
         private bool disposed;
