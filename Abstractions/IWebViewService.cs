@@ -4,7 +4,7 @@
     /// Web Service Implementation
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IWebViewServices<T>
+    public interface IWebViewService<T>
     {
         public T WebView { get; set; }
 

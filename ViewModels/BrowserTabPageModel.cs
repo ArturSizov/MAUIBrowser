@@ -34,7 +34,7 @@ namespace MAUIBrowser.ViewModels
             var url = WebViewSourceBuilder.Create(EntryUrl);
             Url = url;
             EntryUrl = url;
-            await state.Insert(new HistoryModel
+            await state.InsertAsync(new HistoryModel
             {
                 Date = DateTime.Now,
                 Url = Url,
@@ -60,7 +60,7 @@ namespace MAUIBrowser.ViewModels
                 Url = source.Url;
                 EntryUrl = Url;
 
-               await state.Insert(new HistoryModel
+               await state.InsertAsync(new HistoryModel
                 {
                     Date = DateTime.Now,
                     Url = Url,

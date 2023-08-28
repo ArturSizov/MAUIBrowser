@@ -9,8 +9,8 @@ namespace MAUIBrowser.ViewModels
     public class HistoryPopupViewModel : BindableObject
     {
         #region Private property 
-        private IHistoryPopupServices setPopup;
-        private IWebViewServices<WebView> web;
+        private IHistoryPopupService setPopup;
+        private IWebViewService<WebView> web;
         private HistoryModel selectHistory;
         #endregion
 
@@ -27,7 +27,7 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public HistoryPopupViewModel(IHistoryPopupServices setPopup, BrowserState browserState, IWebViewServices<WebView> web)
+        public HistoryPopupViewModel(IHistoryPopupService setPopup, BrowserState browserState, IWebViewService<WebView> web)
         {
             this.web = web;
             this.setPopup = setPopup;
@@ -82,7 +82,7 @@ namespace MAUIBrowser.ViewModels
             if (tab == null)
                 return;
 
-           await BrowserState.Remove(tab);
+           await BrowserState.RemoveAsync(tab);
         });
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace MAUIBrowser.ViewModels
         /// </summary>
         public ICommand DeleteAllHistoryCommand => new Command(async () =>
         {
-            await BrowserState.RemoveAll();
+            await BrowserState.RemoveAllAsync();
             await setPopup.CloseAsync();
         });
         #endregion

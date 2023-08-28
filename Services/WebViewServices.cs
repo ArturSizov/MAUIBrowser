@@ -4,7 +4,7 @@ using MAUIBrowser.State;
 
 namespace MAUIBrowser.Services
 {
-    public class WebViewServices : IWebViewServices<WebView>
+    public class WebViewServices : IWebViewService<WebView>
     {
         #region Private property 
         private BrowserState state;

@@ -3,7 +3,7 @@
     /// <summary>
     /// Implementation of the browsing history window
     /// </summary>
-    public interface IHistoryPopupServices
+    public interface IHistoryPopupService
     {
         /// <summary>
         /// Show browsing history

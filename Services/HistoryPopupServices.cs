@@ -4,7 +4,7 @@ using MAUIBrowser.Pages;
 
 namespace MAUIBrowser.Services
 {
-    public class HistoryPopupServices : IHistoryPopupServices
+    public class HistoryPopupServices : IHistoryPopupService
     {
         #region Private property 
         private Popup? popup;

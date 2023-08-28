@@ -7,10 +7,8 @@ using MAUIBrowser.Services;
 using MAUIBrowser.State;
 using CommunityToolkit.Maui;
 using MAUIBrowser.Pages;
-using MAUIBrowser.DataAccessLayer.Context;
 using MAUIBrowser.Models;
-using MAUIBrowser.DataAccessLayer.Implementations;
-using SQLite;
+using MAUIBrowser.DataAccessLayer;
 #if ANDROID
 	using MAUIBrowser.Platforms.Android.Handlers;
 #endif
@@ -46,19 +44,18 @@ public static class MauiProgram
 
 		builder.Services.AddMopupsDialogs()
 
-			// register Services
-			.AddSingleton<IDataProvider<SQLiteAsyncConnection>, DataProvider>()
-			.AddSingleton<IHistoryData<HistoryModel>, HistoryData>()
-            .AddSingleton<IRepository<HistoryModel>, BrowserState>()
+            // register Services
+            .AddSingleton(new DbConnectionOptions { ConnectionString = Path.Combine(FileSystem.AppDataDirectory, "history.db") })
+            .AddSingleton<IHistoryDataProvider<HistoryModel>, HistoryDataSQLiteProvider>()
             .AddSingleton<ITabsPopupService, TabsPopupService>()
-			.AddSingleton<IWebViewServices<WebView>, WebViewServices>()
-			.AddSingleton<IHistoryPopupServices, HistoryPopupServices>()
-			.AddSingleton<BrowserState>()
-			.AddSingleton<ISettingsService, SettingsService>()
-            
+            .AddSingleton<IWebViewService<WebView>, WebViewServices>()
+            .AddSingleton<IHistoryPopupService, HistoryPopupServices>()
+            .AddSingleton<BrowserState>()
+            .AddSingleton<ISettingsService, SettingsService>()
 
-			// register Pages
-			.AddTransient<MainPage>()
+
+            // register Pages
+            .AddTransient<MainPage>()
 			.AddTransient<BrowserTabPage>()
 
 			// register ViewModels

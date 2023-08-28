@@ -12,7 +12,7 @@ namespace MAUIBrowser.ViewModels
     public class HomePanelViewModel : BindableObject
     {
         #region Private property 
-        private IWebViewServices<WebView> web;
+        private IWebViewService<WebView> web;
         private string url = string.Empty;
         private SearchEngineModel searchEngine;
         private ISettingsService settings;
@@ -41,7 +41,7 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public HomePanelViewModel(BrowserState state, IWebViewServices<WebView> web, ISettingsService settings)
+        public HomePanelViewModel(BrowserState state, IWebViewService<WebView> web, ISettingsService settings)
         {
             this.settings = settings;
             this.web = web;

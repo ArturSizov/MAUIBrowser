@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 
 namespace MAUIBrowser.State
 {
-    public class BrowserState : BindableObject, IRepository<HistoryModel>
+    public class BrowserState : BindableObject
     {
 
         #region Private property 
-        private IHistoryData<HistoryModel> data;
+        private IHistoryDataProvider<HistoryModel> historyDataProvider;
 
         #endregion
 
@@ -75,19 +75,18 @@ namespace MAUIBrowser.State
         };
         #endregion
 
-        public BrowserState(IHistoryData<HistoryModel> data)
+        public BrowserState(IHistoryDataProvider<HistoryModel> historyDataProvider)
         {
-            this.data = data;
-            data.DatabasePath = Path.Combine(FileSystem.AppDataDirectory, "history.db");
-            Task.Run(async() => Histories = new ObservableCollection<HistoryModel>(await GetAllHistory())).Wait();
+            this.historyDataProvider = historyDataProvider;
+            Task.Run(async() => Histories = new ObservableCollection<HistoryModel>(await GetAllHistoryAsync())).Wait();
         }
 
         #region Methods
 
         // Get all history
-        private async Task<IList<HistoryModel>> GetAllHistory()
+        private async Task<IList<HistoryModel>> GetAllHistoryAsync()
         {
-            return new ObservableCollection<HistoryModel>(await data.GetAllAsync()).ToList();
+            return new ObservableCollection<HistoryModel>(await historyDataProvider.ReadAllAsync()).ToList();
         }
 
         /// <summary>
@@ -95,10 +94,10 @@ namespace MAUIBrowser.State
         /// </summary>
         /// <param name="history"></param>
         /// <returns></returns>
-        public async Task Insert(HistoryModel history)
+        public async Task InsertAsync(HistoryModel history)
         {
             Histories.Add(history);
-            await data.InsertAsync(history);
+            await historyDataProvider.CreateAsync(history);
         }
 
         /// <summary>
@@ -106,22 +105,19 @@ namespace MAUIBrowser.State
         /// </summary>
         /// <param name="history"></param>
         /// <returns></returns>
-        public async Task Remove(HistoryModel history)
+        public async Task RemoveAsync(HistoryModel history)
         {
             Histories.Remove(history);
-            await data.RemoveAsync(history);
+            await historyDataProvider.DeleteAsync(history);
         }
 
         /// <summary>
         /// Remove all histories
         /// </summary>
         /// <returns></returns>
-        public async Task RemoveAll()
+        public async Task RemoveAllAsync()
         {
-            foreach (var item in Histories)
-            {
-                await data.RemoveAsync(item);
-            }
+            await historyDataProvider.DeleteAllAsync();
             Histories.Clear();
         }
 

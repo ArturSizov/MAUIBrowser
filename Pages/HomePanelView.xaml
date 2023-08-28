@@ -44,10 +44,10 @@
                         <ImageButton
                                 Source="{Binding Image}"
                                 Margin="3" 
-                                HeightRequest="40"
-                                WidthRequest="95"
+                                HeightRequest="45"
+                                WidthRequest="55"
                                 BackgroundColor="Transparent" 
-                                HorizontalOptions="FillAndExpand"
+                                HorizontalOptions="StartAndExpand"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=InstallASearchSystemCommand}"
                                 CommandParameter="{Binding .}">
 

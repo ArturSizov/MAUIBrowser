@@ -10,8 +10,8 @@ namespace MAUIBrowser.ViewModels
         #region Private property 
         private BrowserState browserState;
         private ITabsPopupService popupService;
-        private IWebViewServices<WebView> web;
-        private IHistoryPopupServices hisPopup;
+        private IWebViewService<WebView> web;
+        private IHistoryPopupService hisPopup;
         #endregion
 
         #region Public property 
@@ -26,7 +26,7 @@ namespace MAUIBrowser.ViewModels
         }
         #endregion
 
-        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewServices<WebView> web, BrowserState browserState, IHistoryPopupServices hisPopup)
+        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewService<WebView> web, BrowserState browserState, IHistoryPopupService hisPopup)
         {
             this.popupService = popupService;
             this.web = web;
