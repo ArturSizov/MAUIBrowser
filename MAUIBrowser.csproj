@@ -106,6 +106,10 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Panels\" />
+	</ItemGroup>
+
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionMAUIBrowserHideInfoBar="True" XamarinHotReloadGenericExceptionInfoBarMAUIBrowserHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

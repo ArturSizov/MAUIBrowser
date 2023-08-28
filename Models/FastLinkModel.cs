@@ -1,31 +1,13 @@
-﻿namespace MAUIBrowser.Models
+﻿using SQLite;
+
+namespace MAUIBrowser.Models
 {
     public class FastLinkModel : BindableObject
     {
-        #region Private property 
-        private string _url = string.Empty;
-        private string _title = string.Empty;
-        #endregion
-
-        #region Public poperty 
-        public string Url
-        {
-            get => _url;
-            set
-            {
-                _url = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Title
-        {
-            get => _title;
-            set
-            {
-                _title = value;
-                OnPropertyChanged();
-            }
-        }
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string Url { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         public string IconSource
         {
             get
@@ -36,6 +18,5 @@
                 return $"{uri.Scheme}://{uri.Host}/favicon.ico";
             }
         }
-        #endregion
     }
 }

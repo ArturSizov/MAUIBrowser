@@ -62,6 +62,7 @@
                     AlignContent="Start"
                     AlignItems="Start"
                     Wrap="Wrap">
+            
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <Border WidthRequest="60" 
@@ -69,10 +70,13 @@
                             Margin="2">
                         <StackLayout HorizontalOptions="Center" 
                                      VerticalOptions="Center">
-                            <Image Source="{Binding IconSource}" 
-                                   WidthRequest="35" 
-                                   HeightRequest="35" />
-                            <Label Text="{Binding Title}" FontSize="10"
+                            <ImageButton Source="{Binding IconSource}" 
+                                         WidthRequest="35" 
+                                         HeightRequest="35"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=FastLinkCommand}" 
+                                         CommandParameter="{Binding .}">
+
+                                <Label Text="{Binding Title}" FontSize="10"
                                    LineBreakMode="TailTruncation" 
                                    MaxLines="1" />
                         </StackLayout>
@@ -80,11 +84,6 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
-
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=FastLinkCommand}" 
-                                                  CommandParameter="{Binding .}"/>
-                        </Border.GestureRecognizers>
                     </Border>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>

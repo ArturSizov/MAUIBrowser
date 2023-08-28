@@ -61,11 +61,11 @@ namespace MAUIBrowser.ViewModels
                 EntryUrl = Url;
 
                await state.InsertAsync(new HistoryModel
-                {
+               {
                     Date = DateTime.Now,
                     Url = Url,
                     Title = Title
-                });
+               });
             }
             args = null;
             OnPropertyChanged(nameof(EntryUrl));

@@ -47,6 +47,7 @@ public static class MauiProgram
             // register Services
             .AddSingleton(new DbConnectionOptions { ConnectionString = Path.Combine(FileSystem.AppDataDirectory, "history.db") })
             .AddSingleton<IHistoryDataProvider<HistoryModel>, HistoryDataSQLiteProvider>()
+			.AddSingleton<IFastLinksDataProvider<FastLinkModel>, FastLinksSQLiteProvider>()
             .AddSingleton<ITabsPopupService, TabsPopupService>()
             .AddSingleton<IWebViewService<WebView>, WebViewServices>()
             .AddSingleton<IHistoryPopupService, HistoryPopupServices>()

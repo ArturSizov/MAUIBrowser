@@ -9,6 +9,7 @@ namespace MAUIBrowser.State
 
         #region Private property 
         private IHistoryDataProvider<HistoryModel> historyDataProvider;
+        private IFastLinksDataProvider<FastLinkModel> fastLinksDataProvider;
 
         #endregion
 
@@ -75,10 +76,13 @@ namespace MAUIBrowser.State
         };
         #endregion
 
-        public BrowserState(IHistoryDataProvider<HistoryModel> historyDataProvider)
+        public BrowserState(IHistoryDataProvider<HistoryModel> historyDataProvider, IFastLinksDataProvider<FastLinkModel> fastLinksDataProvider)
         {
             this.historyDataProvider = historyDataProvider;
+            this.fastLinksDataProvider = fastLinksDataProvider;
+
             Task.Run(async() => Histories = new ObservableCollection<HistoryModel>(await GetAllHistoryAsync())).Wait();
+            //Task.Run(async () => Links = new ObservableCollection<FastLinkModel>(await GetAllFastLinksAsync())).Wait();
         }
 
         #region Methods
@@ -87,6 +91,12 @@ namespace MAUIBrowser.State
         private async Task<IList<HistoryModel>> GetAllHistoryAsync()
         {
             return new ObservableCollection<HistoryModel>(await historyDataProvider.ReadAllAsync()).ToList();
+        }
+
+        // Get all history
+        private async Task<IList<FastLinkModel>> GetAllFastLinksAsync()
+        {
+            return new ObservableCollection<FastLinkModel>(await fastLinksDataProvider.ReadAllAsync()).ToList();
         }
 
         /// <summary>
