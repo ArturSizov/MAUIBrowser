@@ -1,5 +1,8 @@
 ﻿namespace MAUIBrowser.Models
 {
+    /// <summary>
+    /// History Model
+    /// </summary>
     public class HistoryModel : BindableObject
 	{
 		private int _id;

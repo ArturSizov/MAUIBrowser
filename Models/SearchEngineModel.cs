@@ -1,5 +1,8 @@
 ﻿namespace MAUIBrowser.Models
 {
+    /// <summary>
+    ///  Search Engine Model
+    /// </summary>
     public class SearchEngineModel : BindableObject
 	{
 		private string _image = string.Empty;

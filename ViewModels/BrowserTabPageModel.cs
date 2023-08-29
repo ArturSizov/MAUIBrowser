@@ -17,7 +17,6 @@ namespace MAUIBrowser.ViewModels
         public string EntryUrl { get; set; } = string.Empty;
 
 
-
         public BrowserTabPageModel(IBrowserStateManager<HistoryModel> historyManager)
         {
 			_historyManager = historyManager;
@@ -50,15 +49,17 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Refresh entry command
         /// </summary>
-        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>(async (args) =>
+        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>(async(args) =>
         {
             if (args == null || args.Source is not UrlWebViewSource source)
                 return;
 
+            EntryUrl = source.Url;
+
 			await _historyManager.CreateAsync(new HistoryModel
 			{
 				Date = DateTime.Now,
-				Url = Url,
+				Url = source.Url,
 				Title = Title
 			});
 

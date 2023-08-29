@@ -2,6 +2,9 @@
 
 namespace MAUIBrowser.DataAccessLayer.DAO
 {
+    /// <summary>
+    /// History Info Data Access Object
+    /// </summary>
     public class HistoryInfoDAO
     {
         [PrimaryKey, AutoIncrement]

@@ -2,6 +2,9 @@
 
 namespace MAUIBrowser.DataAccessLayer.DAO
 {
+    /// <summary>
+    /// Fast Link Info Data Access Object
+    /// </summary>
     public class FastLinkInfoDAO
     {
         [PrimaryKey, AutoIncrement]

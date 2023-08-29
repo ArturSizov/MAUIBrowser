@@ -2,6 +2,9 @@
 
 namespace MAUIBrowser.Models
 {
+    /// <summary>
+    /// Fast Link Model
+    /// </summary>
     public class FastLinkModel : BindableObject
 	{
 		private int _id;

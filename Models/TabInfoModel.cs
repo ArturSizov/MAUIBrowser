@@ -1,14 +1,14 @@
 ﻿namespace MAUIBrowser.Models
 {
+    /// <summary>
+    /// Tab Info Model
+    /// </summary>
     public class TabInfoModel : BindableObject
     {
-        #region Private property 
         private string title = string.Empty;
         private string url = string.Empty;
         private ContentView content = new();
-        #endregion
 
-        #region Public property 
         public string Title
         {
             get => title; 
@@ -36,6 +36,5 @@
                 OnPropertyChanged();
             }
         }
-        #endregion
     }
 }
