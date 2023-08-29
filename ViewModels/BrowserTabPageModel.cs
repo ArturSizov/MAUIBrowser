@@ -54,7 +54,8 @@ namespace MAUIBrowser.ViewModels
             if (args == null || args.Source is not UrlWebViewSource source)
                 return;
 
-            EntryUrl = source.Url;
+            Url = source.Url;
+            EntryUrl = Url;
 
 			await _historyManager.CreateAsync(new HistoryModel
 			{
@@ -62,6 +63,8 @@ namespace MAUIBrowser.ViewModels
 				Url = source.Url,
 				Title = Title
 			});
+
+            args = null;
 
             OnPropertyChanged(nameof(EntryUrl));
         });
