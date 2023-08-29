@@ -39,7 +39,7 @@
                    FontAttributes="Bold"
                    TextColor="#808080"/>
             <CollectionView ItemsLayout="HorizontalList"
-                            ItemsSource="{Binding BrowserState.SearchEngines}">
+                            ItemsSource="{Binding BrowserState.SearchEngineState.SearchEngines}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ImageButton

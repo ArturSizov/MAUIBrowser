@@ -113,7 +113,7 @@ namespace MAUIBrowser.ViewModels
                 SearchEngine = ser;
                 WebViewSourceBuilder.SearchString = SearchEngine.SearchQuery;
 
-                var index = BrowserState.SearchEngines.IndexOf(SearchEngine);
+                var index = BrowserState.SearchEngineState.SearchEngines.IndexOf(SearchEngine);
 
                 count = index;
 
@@ -220,7 +220,7 @@ namespace MAUIBrowser.ViewModels
         {
             count = await settings.GetSettings<int>(nameof(count), 0);
 
-            SearchEngine = BrowserState.SearchEngines[count];
+            SearchEngine = BrowserState.SearchEngineState.SearchEngines[count];
 
             WebViewSourceBuilder.SearchString = SearchEngine.SearchQuery;
         }

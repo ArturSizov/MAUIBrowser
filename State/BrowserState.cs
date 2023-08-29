@@ -9,35 +9,20 @@ namespace MAUIBrowser.State
         #region Public property 
         public ObservableCollection<TabInfoModel> Tabs { get; } = new();
 
-        public TabInfoModel? CurrentTab;
-        public ObservableCollection<SearchEngineModel> SearchEngines { get; set; } = new()
-        {
-                new()
-                {
-                    Image = "google.png",
-                    SearchQuery = "https://www.google.com/search?q="
-                },
-                new()
-                {
-                    Image = "rambler.png",
-                    SearchQuery = "https://nova.rambler.ru/search?query="
-                },
-                new()
-                {
-                    Image = "yandex.png",
-                    SearchQuery = "https://ya.ru/search/?text="
-                }
-        };
+        public TabInfoModel? CurrentTab;  
 
         public FastLinksState FastLinksState { get; }
         public HistoryState HistoryState { get; }
 
+        public SearchEngineState SearchEngineState { get; }
+
         #endregion
 
-        public BrowserState(FastLinksState fastLinksState, HistoryState historyState)
+        public BrowserState(FastLinksState fastLinksState, HistoryState historyState, SearchEngineState searchEngineState)
         {
             FastLinksState = fastLinksState;
             HistoryState = historyState;
+            SearchEngineState = searchEngineState;
         }
     }
 }

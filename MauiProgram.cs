@@ -54,6 +54,7 @@ public static class MauiProgram
             .AddSingleton<BrowserState>()
 			.AddSingleton<FastLinksState>()
 			.AddSingleton<HistoryState>()
+			.AddSingleton<SearchEngineState>()
             .AddSingleton<ISettingsService, SettingsService>()
 
 
