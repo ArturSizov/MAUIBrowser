@@ -1,28 +1,21 @@
-﻿using MAUIBrowser.Abstractions;
-using MAUIBrowser.Models;
+﻿using MAUIBrowser.Models;
 using System.Collections.ObjectModel;
 
 namespace MAUIBrowser.State
 {
+    /// <summary>
+    /// Main browser state
+    /// </summary>
     public class BrowserState : BindableObject
     {
-        #region Public property 
+        /// <summary>
+        /// Opened tabs
+        /// </summary>
         public ObservableCollection<TabInfoModel> Tabs { get; } = new();
 
-        public TabInfoModel? CurrentTab;  
-
-        public FastLinksState FastLinksState { get; }
-        public HistoryState HistoryState { get; }
-
-        public SearchEngineState SearchEngineState { get; }
-
-        #endregion
-
-        public BrowserState(FastLinksState fastLinksState, HistoryState historyState, SearchEngineState searchEngineState)
-        {
-            FastLinksState = fastLinksState;
-            HistoryState = historyState;
-            SearchEngineState = searchEngineState;
-        }
+        /// <summary>
+        /// Current tab
+        /// </summary>
+        public TabInfoModel? CurrentTab { get; set; } 
     }
 }

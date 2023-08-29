@@ -6,9 +6,11 @@ using MAUIBrowser.Abstractions;
 using MAUIBrowser.Services;
 using MAUIBrowser.State;
 using CommunityToolkit.Maui;
-using MAUIBrowser.Pages;
 using MAUIBrowser.Models;
 using MAUIBrowser.DataAccessLayer;
+using MAUIBrowser.DataAccessLayer.DAO;
+using Microsoft.Extensions.Logging;
+using MAUIBrowser.Managers;
 #if ANDROID
 	using MAUIBrowser.Platforms.Android.Handlers;
 #endif
@@ -20,6 +22,7 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
+		builder.Logging.AddDebug();
 		builder
 			.UseMauiApp<App>()
 			.ConfigureMopups()
@@ -44,23 +47,20 @@ public static class MauiProgram
 
 		builder.Services.AddMopupsDialogs()
 
-            // register Services
-            .AddSingleton(new DbConnectionOptions { ConnectionString = Path.Combine(FileSystem.AppDataDirectory, "history.db") })
-            .AddSingleton<IHistoryDataProvider<HistoryModel>, HistoryDataSQLiteProvider>()
-			.AddSingleton<IFastLinksDataProvider<FastLinkModel>, FastLinksSQLiteProvider>()
-            .AddSingleton<ITabsPopupService, TabsPopupService>()
-            .AddSingleton<IWebViewService<WebView>, WebViewServices>()
-            .AddSingleton<IHistoryPopupService, HistoryPopupServices>()
-            .AddSingleton<BrowserState>()
-			.AddSingleton<FastLinksState>()
-			.AddSingleton<HistoryState>()
-			.AddSingleton<SearchEngineState>()
+			// register Services
+			.AddSingleton(new DbConnectionOptions { ConnectionString = Path.Combine(FileSystem.AppDataDirectory, "history.db") })
+			.AddSingleton<IDataProvider<HistoryInfoDAO>, HistoryDataSQLiteProvider>()
+			.AddSingleton<IDataProvider<FastLinkInfoDAO>, FastLinksSQLiteProvider>()
+			.AddSingleton<ITabsPopupService, TabsPopupService>()
+			.AddSingleton<IWebViewService<WebView>, WebViewServices>()
+			.AddSingleton<IHistoryPopupService, HistoryPopupServices>()
+			.AddSingleton<BrowserState>()
+
+			.AddSingleton<IBrowserStateManager<FastLinkModel>, FastLinksManager>()
+			.AddSingleton<IBrowserStateManager<HistoryModel>, HistoryManager>()
+			.AddSingleton<IBrowserStateManager<SearchEngineModel>, SearchEngineManager>()
+
             .AddSingleton<ISettingsService, SettingsService>()
-
-
-            // register Pages
-            .AddTransient<MainPage>()
-			.AddTransient<BrowserTabPage>()
 
 			// register ViewModels
 			.AddSingleton<BrowserTabPageModel>()
@@ -72,7 +72,11 @@ public static class MauiProgram
 
 		var app = builder.Build();
 
-        RootContainer.Container.Initialize(app.Services);
+		// a workaround to initialize the SQL providers before pages
+		_ = app.Services.GetRequiredService<IDataProvider<HistoryInfoDAO>>();
+		_ = app.Services.GetRequiredService<IDataProvider<FastLinkInfoDAO>>();
+
+		RootContainer.Container.Initialize(app.Services);
 
         return app; 
 	}

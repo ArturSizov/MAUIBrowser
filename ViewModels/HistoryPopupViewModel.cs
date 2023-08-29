@@ -1,4 +1,5 @@
 ﻿using MAUIBrowser.Abstractions;
+using MAUIBrowser.Auxiliary;
 using MAUIBrowser.Models;
 using MAUIBrowser.Pages;
 using MAUIBrowser.State;
@@ -8,15 +9,13 @@ namespace MAUIBrowser.ViewModels
 {
     public class HistoryPopupViewModel : BindableObject
     {
-        #region Private property 
-        private IHistoryPopupService setPopup;
-        private IWebViewService<WebView> web;
-        private HistoryModel selectHistory;
-        #endregion
+        private IHistoryPopupService _historyPopupService;
+        private IWebViewService<WebView> _webViewService;
+        private HistoryModel? selectHistory;
 
-        #region Public property 
-        public BrowserState BrowserState { get; }
-        public HistoryModel SelectHistory
+        public IBrowserStateManager<HistoryModel> HistoryManager { get; }
+
+        public HistoryModel? SelectHistory
         {
             get => selectHistory;
             set
@@ -25,13 +24,12 @@ namespace MAUIBrowser.ViewModels
                 OnPropertyChanged();
             }
         }
-        #endregion
 
-        public HistoryPopupViewModel(IHistoryPopupService setPopup, BrowserState browserState, IWebViewService<WebView> web)
+        public HistoryPopupViewModel(IBrowserStateManager<HistoryModel> historyManager, IHistoryPopupService historyPopupService, IWebViewService<WebView> webViewService)
         {
-            this.web = web;
-            this.setPopup = setPopup;
-            BrowserState = browserState;
+            _webViewService = webViewService;
+            _historyPopupService = historyPopupService;
+			HistoryManager = historyManager;
         }
 
         #region Commands 
@@ -41,7 +39,7 @@ namespace MAUIBrowser.ViewModels
         /// </summary>
         public ICommand CloseCommand => new Command(async() =>
         {
-           await setPopup.CloseAsync();
+           await _historyPopupService.CloseAsync();
         });
 
         /// <summary>
@@ -52,9 +50,9 @@ namespace MAUIBrowser.ViewModels
             if (SelectHistory == null || Application.Current?.MainPage is not ContentPage contentPage)
                 return;
 
-            contentPage.Content = new BrowserTabPage(web)
+            contentPage.Content = new BrowserTabPage(_webViewService)
             {
-                BindingContext = new BrowserTabPageModel(BrowserState)
+                BindingContext = new BrowserTabPageModel(HistoryManager)
                 {
                     Url = SelectHistory.Url,
                     EntryUrl = SelectHistory.Url,
@@ -68,21 +66,21 @@ namespace MAUIBrowser.ViewModels
                 Url = SelectHistory.Url
             };
 
-            BrowserState.Tabs.Add(tap);
+            //BrowserState.Tabs.Add(tap);
 
             SelectHistory = null;
-            await setPopup.CloseAsync();
+            await _historyPopupService.CloseAsync();
         });
 
         /// <summary>
         /// Delete history command
         /// </summary>
-        public ICommand DeleteHistoryCommand => new Command<HistoryModel>(async (tab) =>
+        public ICommand DeleteHistoryCommand => new Command<HistoryModel>(async (item) =>
         {
-            if (tab == null)
+            if (item == null)
                 return;
 
-           await BrowserState.HistoryState.RemoveAsync(tab);
+           await HistoryManager.DeleteAsync(item);
         });
 
         /// <summary>
@@ -90,8 +88,8 @@ namespace MAUIBrowser.ViewModels
         /// </summary>
         public ICommand DeleteAllHistoryCommand => new Command(async() =>
         {
-            await BrowserState.HistoryState.RemoveAllAsync();
-            await setPopup.CloseAsync();
+            await HistoryManager.DeleteAllAsync();
+            await _historyPopupService.CloseAsync();
         });
         #endregion
     }

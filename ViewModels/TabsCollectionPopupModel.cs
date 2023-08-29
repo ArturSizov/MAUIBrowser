@@ -8,34 +8,27 @@ namespace MAUIBrowser.ViewModels
 {
     public class TabsCollectionPopupModel : BindableObject
     {
+        private TabInfoModel? _selectedTab;
+        private readonly ITabsPopupService _popupService;
 
-        #region Private property 
-        private TabInfoModel selectedTab;
-        private readonly ITabsPopupService popupService;
-        #endregion
-
-        #region Public property 
         public BrowserState BrowserState { get; }
 
-        public TabInfoModel SelectedTab
+        public TabInfoModel? SelectedTab
         {
-            get => selectedTab; 
+            get => _selectedTab; 
             set
             {
-                selectedTab = value;
+				_selectedTab = value;
                 OnPropertyChanged();
             }
         }
 
-        #endregion
-
         public TabsCollectionPopupModel(ITabsPopupService popupService, BrowserState browserState)
         {
-            this.popupService = popupService;
+            _popupService = popupService;
             BrowserState = browserState;
         }
 
-        #region Commands
         /// <summary>
         /// Blank page creation command
         /// </summary>
@@ -44,7 +37,7 @@ namespace MAUIBrowser.ViewModels
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
 
-            await popupService.CloseAsync();
+            await _popupService.CloseAsync();
 
             var tab = new TabInfoModel
             {
@@ -62,7 +55,7 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Single page delete command
         /// </summary>
-        public ICommand DeleteTabCommand => new Command<TabInfoModel>(async(tab) =>
+        public ICommand DeleteTabCommand => new Command<TabInfoModel?>(async(tab) =>
         {
             if (tab == null)
                 return;
@@ -73,7 +66,7 @@ namespace MAUIBrowser.ViewModels
             {
                 BrowserState.CurrentTab = null;
                 contentPage.Content = new HomePanelView();
-                await popupService.CloseAsync();
+                await _popupService.CloseAsync();
             }
         });
 
@@ -89,10 +82,8 @@ namespace MAUIBrowser.ViewModels
 
             contentPage.Content = SelectedTab.Content;
 
-            await popupService.CloseAsync();
+            await _popupService.CloseAsync();
         });
-
-        #endregion
     }
 }
 

@@ -39,7 +39,7 @@
                    FontAttributes="Bold"
                    TextColor="#808080"/>
             <CollectionView ItemsLayout="HorizontalList"
-                            ItemsSource="{Binding BrowserState.SearchEngineState.SearchEngines}">
+                            ItemsSource="{Binding SearchManager.Items}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ImageButton
@@ -59,7 +59,7 @@
         </VerticalStackLayout>
 
         <FlexLayout Grid.Row="2" 
-                    BindableLayout.ItemsSource="{Binding BrowserState.FastLinksState.Links}"
+                    BindableLayout.ItemsSource="{Binding FastLinksManager.Items}"
                     AlignContent="Start"
                     AlignItems="Start"
                     Wrap="Wrap">
@@ -110,7 +110,7 @@
                                HorizontalOptions="End">
             <material:ButtonView
                       PressedCommand="{Binding ButtonViewPressedCommand}"
-                      IsVisible="{Binding BrowserState.FastLinksState.Links.Count, Converter={StaticResource IsVisibleButtonConverter}}">
+                      IsVisible="{Binding FastLinksManager.Items.Count, Converter={StaticResource IsVisibleButtonConverter}}">
                 <Image>
                     <Image.Source>
                         <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Edit}" Color="White" />

@@ -6,13 +6,9 @@ namespace MAUIBrowser.Services
 {
     public class TabsPopupService : ITabsPopupService
     {
-        #region Private property 
-        private Popup? popup;
-        private bool disposed;
-        #endregion
+        private Popup? _popup;
+        private bool _disposed;
 
-
-        #region Methods 
         /// <summary>
         /// Show popup window
         /// </summary>
@@ -22,11 +18,11 @@ namespace MAUIBrowser.Services
             if (Application.Current?.MainPage == null)
                 return;
 
-            disposed = false;
-            popup = new TabsCollectionPopup();
-            popup.Closed += PopupClosed;
+            _disposed = false;
+            _popup = new TabsCollectionPopup();
+            _popup.Closed += PopupClosed;
 
-            await Application.Current.MainPage.ShowPopupAsync(popup);
+            await Application.Current.MainPage.ShowPopupAsync(_popup);
         }
 
         /// <summary>
@@ -35,24 +31,23 @@ namespace MAUIBrowser.Services
         /// <returns></returns>
         public async Task CloseAsync()
         {
-            if (popup == null)
+            if (_popup == null)
                 return;
 
-            if (!disposed)
-                await popup.CloseAsync();
+            if (!_disposed)
+                await _popup.CloseAsync();
 
-            popup = null;
+            _popup = null;
         }
 
 
         // Closed popup window
         private void PopupClosed(object? sender, CommunityToolkit.Maui.Core.PopupClosedEventArgs e)
         {
-            if (popup != null)
-                popup.Closed -= PopupClosed;
+            if (_popup != null)
+                _popup.Closed -= PopupClosed;
 
-            disposed = true;
+            _disposed = true;
         }
-        #endregion
     }
 }

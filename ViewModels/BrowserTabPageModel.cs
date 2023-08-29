@@ -1,4 +1,5 @@
-﻿using MAUIBrowser.Auxiliary;
+﻿using MAUIBrowser.Abstractions;
+using MAUIBrowser.Auxiliary;
 using MAUIBrowser.Models;
 using MAUIBrowser.State;
 using System.Windows.Input;
@@ -7,20 +8,20 @@ namespace MAUIBrowser.ViewModels
 {
     public class BrowserTabPageModel : BindableObject
     {
-        #region Private property 
-        private BrowserState state;
-        #endregion
+        private readonly IBrowserStateManager<HistoryModel> _historyManager;
 
-        #region Public property 
         public string Title { get; set; } = string.Empty;
-        public string Url { get; set; } = string.Empty;
-        public string EntryUrl { get; set; } = string.Empty;
-        #endregion
 
-        public BrowserTabPageModel(BrowserState state)
+        public string Url { get; set; } = string.Empty;
+
+        public string EntryUrl { get; set; } = string.Empty;
+
+
+
+        public BrowserTabPageModel(IBrowserStateManager<HistoryModel> historyManager)
         {
-            this.state = state;
-            EntryUrl = Url; 
+			_historyManager = historyManager;
+			EntryUrl = Url; 
             OnPropertyChanged(nameof(Url));
             OnPropertyChanged(nameof(EntryUrl));
         }
@@ -34,12 +35,14 @@ namespace MAUIBrowser.ViewModels
             var url = WebViewSourceBuilder.Create(EntryUrl);
             Url = url;
             EntryUrl = url;
-            await state.HistoryState.InsertAsync(new HistoryModel
+
+            await _historyManager.CreateAsync(new HistoryModel
             {
                 Date = DateTime.Now,
                 Url = Url,
                 Title = Title
             });
+
             OnPropertyChanged(nameof(EntryUrl));
             OnPropertyChanged(nameof(Url));
         });
@@ -47,27 +50,18 @@ namespace MAUIBrowser.ViewModels
         /// <summary>
         /// Refresh entry command
         /// </summary>
-        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>(async(args) =>
+        public ICommand AddressEntryCompleted => new Command<WebNavigatedEventArgs>(async (args) =>
         {
-            if (args.Source is not UrlWebViewSource source)
-                return;
-            if (args is null)
+            if (args == null || args.Source is not UrlWebViewSource source)
                 return;
 
-            var result = state.HistoryState.Histories.Any(h => h.Url == args.Url);
-            if (!result)
-            {
-                Url = source.Url;
-                EntryUrl = Url;
+			await _historyManager.CreateAsync(new HistoryModel
+			{
+				Date = DateTime.Now,
+				Url = Url,
+				Title = Title
+			});
 
-               await state.HistoryState.InsertAsync(new HistoryModel
-               {
-                    Date = DateTime.Now,
-                    Url = Url,
-                    Title = Title
-               });
-            }
-            args = null;
             OnPropertyChanged(nameof(EntryUrl));
         });
         #endregion

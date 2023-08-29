@@ -7,34 +7,20 @@ namespace MAUIBrowser.ViewModels
 {
     public class BottomControlsViewModel : BindableObject
     {
-        #region Private property 
-        private BrowserState browserState;
-        private ITabsPopupService popupService;
-        private IWebViewService<WebView> web;
-        private IHistoryPopupService hisPopup;
-        #endregion
+        private ITabsPopupService _tabsPopupService;
+        private IWebViewService<WebView> _webViewService;
+		private IHistoryPopupService _historyPopupService;
 
-        #region Public property 
-        public BrowserState BrowserState
-        {
-            get => browserState; 
-            set
-            {
-                browserState = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
+        public BrowserState BrowserState { get; }
 
-        public BottomControlsViewModel(ITabsPopupService popupService, IWebViewService<WebView> web, BrowserState browserState, IHistoryPopupService hisPopup)
+        public BottomControlsViewModel(BrowserState browserState, ITabsPopupService tabsPopupService, IWebViewService<WebView> webViewService, IHistoryPopupService historyPopupService)
         {
-            this.popupService = popupService;
-            this.web = web;
-            this.hisPopup = hisPopup;
+            _tabsPopupService = tabsPopupService;
+            _webViewService = webViewService;
+            _historyPopupService = historyPopupService;
             BrowserState = browserState;
         }
 
-        #region Commands 
         /// <summary>
         /// Go Back Web View command
         /// </summary>
@@ -43,7 +29,7 @@ namespace MAUIBrowser.ViewModels
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
 
-            web.GoBack();
+            _webViewService.GoBack();
 
         });
 
@@ -55,7 +41,7 @@ namespace MAUIBrowser.ViewModels
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
 
-           web.GoForward();
+           _webViewService.GoForward();
         });
 
         /// <summary>
@@ -78,7 +64,7 @@ namespace MAUIBrowser.ViewModels
             if (Application.Current?.MainPage == null)
                 return;
 
-            await popupService.ShowAsync();
+            await _tabsPopupService.ShowAsync();
         });
 
         /// <summary>
@@ -89,8 +75,7 @@ namespace MAUIBrowser.ViewModels
             if (Application.Current?.MainPage == null)
                 return;
 
-            await hisPopup.ShowAsync();
+            await _historyPopupService.ShowAsync();
         });
-        #endregion
     }
 }

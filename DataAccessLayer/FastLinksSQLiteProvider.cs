@@ -1,6 +1,6 @@
 ﻿using MAUIBrowser.Abstractions;
 using MAUIBrowser.Auxiliary;
-using MAUIBrowser.Models;
+using MAUIBrowser.DataAccessLayer.DAO;
 using Microsoft.Extensions.Logging;
 using SQLite;
 
@@ -9,7 +9,7 @@ namespace MAUIBrowser.DataAccessLayer
     /// <summary>
     /// FastLinksData provider
     /// </summary>
-    public class FastLinksSQLiteProvider : IFastLinksDataProvider<FastLinkModel>
+    public class FastLinksSQLiteProvider : IDataProvider<FastLinkInfoDAO>
     {
         private const SQLiteOpenFlags _flags = SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.SharedCache;
 
@@ -29,105 +29,106 @@ namespace MAUIBrowser.DataAccessLayer
             Task.Run(InitAsync);
         }
 
-        #region Methods 
-        /// <inheritdoc/>
-        public async Task CreateAsync(FastLinkModel item)
+		/// <inheritdoc/>
+		public Task<int> CreateAsync(FastLinkInfoDAO item)
         {
             if (_database is null)
-                return;
+				return Task.FromResult(0);
 
-            try
+			try
             {
-                await _database.InsertAsync(item);
+                return _database.InsertAsync(item);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception in CreateAsync()");
-            }
+				return Task.FromResult(0);
+			}
         }
 
         /// <inheritdoc/>
-        public async Task<int> DeleteAllAsync()
+        public Task<int> DeleteAllAsync()
         {
             if (_database is null)
-                return 0;
+				return Task.FromResult(0);
 
-            try
+			try
             {
-                return await _database.DeleteAllAsync<FastLinkModel>();
+                return _database.DeleteAllAsync<FastLinkInfoDAO>();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception in DeleteAllAsync()");
-                return 0;
-            }
+				return Task.FromResult(0);
+			}
         }
 
         /// <inheritdoc/>
-        public async Task DeleteAsync(FastLinkModel item)
+        public Task<int> DeleteAsync(FastLinkInfoDAO item)
         {
             if (_database is null)
-                return;
+				return Task.FromResult(0);
 
-            try
+			try
             {
-                await _database.DeleteAsync(item);
+                return _database.DeleteAsync(item);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception in DeleteAsync()");
-            }
+				return Task.FromResult(0);
+			}
         }
 
         /// <inheritdoc/>
-        public async Task<List<FastLinkModel>> ReadAllAsync()
+        public Task<List<FastLinkInfoDAO>> ReadAllAsync()
         {
             if (_database is null)
-                return new List<FastLinkModel>();
+                return Task.FromResult(new List<FastLinkInfoDAO>());
 
             try
             {
-                return await _database.Table<FastLinkModel>().ToListAsync();
+                return _database.Table<FastLinkInfoDAO>().ToListAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception in DeleteAsync()");
-                return new List<FastLinkModel>();
-            }
+                _logger.LogError(ex, "Exception in ReadAllAsync()");
+				return Task.FromResult(new List<FastLinkInfoDAO>());
+			}
         }
 
         /// <inheritdoc/>
-        public async Task<FastLinkModel> ReadAsync(int id)
+        public Task<FastLinkInfoDAO?> ReadAsync(int id)
         {
             if (_database is null)
-                return null;
+				return Task.FromResult<FastLinkInfoDAO?>(null);
 
-            try
+			try
             {
-                return await _database.Table<FastLinkModel>().Where(i => i.Id == id).FirstOrDefaultAsync();
+                return _database.Table<FastLinkInfoDAO?>().Where(x => x != null && x.Id == id).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception in ReadAsync()");
-                return null;
-            }
+				return Task.FromResult<FastLinkInfoDAO?>(null);
+			}
         }
 
         /// <inheritdoc/>
-        public async Task<int> UpdateAsync(FastLinkModel item)
+        public Task<int> UpdateAsync(FastLinkInfoDAO item)
         {
             if (_database is null)
-                return 0;
+				return Task.FromResult(0);
 
-            try
+			try
             {
-                return await _database.UpdateAsync(item);
+                return _database.UpdateAsync(item);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception in UpdateAsync()");
-                return 0;
-            }
+				return Task.FromResult(0);
+			}
         }
 
         /// <summary>
@@ -136,19 +137,38 @@ namespace MAUIBrowser.DataAccessLayer
         /// <returns></returns>
         private async Task InitAsync()
         {
-            if (_database is not null)
-                return;
+			try
+			{
+				_database ??= new SQLiteAsyncConnection(_connectionString, _flags);
+				var exists = await IsTableExists(nameof(FastLinkInfoDAO));
 
-            try
-            {
-                _database = new SQLiteAsyncConnection(_connectionString, _flags);
-                await _database.CreateTableAsync<FastLinkModel>();
+				if (!exists)
+					_ = await _database.CreateTableAsync<FastLinkInfoDAO>();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception in InitAsync()");
+			}
+        }
+
+		/// <summary>
+		/// Cheks if table already exists
+		/// </summary>
+		/// <param name="tableName">Table name to check</param>
+		/// <returns><see langword="true"/> if exists; otherwise <see langword="false"/></returns>
+		private async Task<bool> IsTableExists(string tableName)
+        {
+            try
+            {
+				_database ??= new SQLiteAsyncConnection(_connectionString, _flags);
+                var info = await _database.GetTableInfoAsync(tableName);
+                return info != null && info.Count > 0;
+			}
+            catch (Exception ex)
+			{
+				_logger.LogError(ex, "Exception in IsTableExists()");
+				return false;
             }
         }
-        #endregion
     }
 }

@@ -12,7 +12,7 @@
         /// <param name="key"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        Task<T> GetSettings<T>(string key, T defaultValue);
+        Task<T> GetSettingsAsync<T>(string key, T defaultValue);
 
         /// <summary>
         /// Saving settings
@@ -21,6 +21,6 @@
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        Task SaveSettings<T>(string key, T value);
+        Task SaveSettingsAsync<T>(string key, T value);
     }
 }

@@ -10,55 +10,66 @@ namespace MAUIBrowser.ViewModels
 {
     public class HomePanelViewModel : BindableObject
     {
-        #region Private property 
-        private IWebViewService<WebView> web;
-        private string url = string.Empty;
-        private SearchEngineModel searchEngine;
-        private ISettingsService settings;
-        private int count;
-        private bool isVisibleDeleteFastLink;
-        #endregion
+        private readonly IBrowserStateManager<HistoryModel> _historyManager;
+		private readonly IWebViewService<WebView> _webService;
+		private readonly ISettingsService _settingsService;
 
-        #region Public property 
+		private string _url = string.Empty;
+        private SearchEngineModel? _searchEngine;
+        private int _count;
+        private bool _isVisibleDeleteFastLink;
+
         public BrowserState BrowserState { get; }
-        public string Url
+
+
+		public IBrowserStateManager<FastLinkModel> FastLinksManager { get; }
+
+		public IBrowserStateManager<SearchEngineModel> SearchManager { get; }
+
+		public string Url
         {
-            get => url; 
+            get => _url; 
             set
             {
-                url = value;
+				_url = value;
                 OnPropertyChanged();
             }
         }
-        public SearchEngineModel SearchEngine
+
+        public SearchEngineModel? SearchEngine
         {
-            get => searchEngine;
+            get => _searchEngine;
             set
             {
-                searchEngine = value;
+				_searchEngine = value;
                 OnPropertyChanged();
             }
         }
+
         public bool IsVisibleDeleteFastLink
         {
-            get => isVisibleDeleteFastLink;
+            get => _isVisibleDeleteFastLink;
             set
             {
-                isVisibleDeleteFastLink = value;
+                _isVisibleDeleteFastLink = value;
                 OnPropertyChanged();
             }
         }
-        #endregion
 
-        public HomePanelViewModel(BrowserState state, IWebViewService<WebView> web, ISettingsService settings)
+        public HomePanelViewModel(BrowserState state, 
+            IBrowserStateManager<HistoryModel> historyManager, 
+            IBrowserStateManager<SearchEngineModel> searchManager,
+			IBrowserStateManager<FastLinkModel> fastLinksManager,
+			IWebViewService<WebView> webService, ISettingsService settingsService)
         {
-            this.settings = settings;
-            this.web = web;
+            _historyManager = historyManager;
+            _settingsService = settingsService;
+			_webService = webService;
             BrowserState = state;
-            Task.Run(async()=> await LoadingAppAsync());
+            FastLinksManager = fastLinksManager;
+			SearchManager = searchManager;
+			Task.Run(LoadingAppAsync);
         }
-
-        #region Commands
 
         /// <summary>
         /// Enter address command
@@ -74,9 +85,9 @@ namespace MAUIBrowser.ViewModels
             {
                 Url = target,
                 Title = url,
-                Content = new BrowserTabPage(web) 
+                Content = new BrowserTabPage(_webService) 
                 {
-                    BindingContext = new BrowserTabPageModel(BrowserState)
+                    BindingContext = new BrowserTabPageModel(_historyManager)
                     {
                         Url =  target,
                         Title = Url,
@@ -113,11 +124,11 @@ namespace MAUIBrowser.ViewModels
                 SearchEngine = ser;
                 WebViewSourceBuilder.SearchString = SearchEngine.SearchQuery;
 
-                var index = BrowserState.SearchEngineState.SearchEngines.IndexOf(SearchEngine);
+                var index = SearchManager.Items.IndexOf(SearchEngine);
 
-                count = index;
+                _count = index;
 
-                await settings.SaveSettings(nameof(count), count);
+                await _settingsService.SaveSettingsAsync(nameof(_count), _count);
             }   
         });
 
@@ -158,14 +169,13 @@ namespace MAUIBrowser.ViewModels
             if (Uri.TryCreate(title, UriKind.Absolute, out var uri) && uri != null)
                 title = uri.Host;
 
-            await BrowserState.FastLinksState.InsertAsync(new()
+            await FastLinksManager.CreateAsync(new()
             {
                 Title = title,
                 Url = source
             });
 
-            OnPropertyChanged(nameof(BrowserState));
-            OnPropertyChanged(nameof(BrowserState.FastLinksState.Links));
+            OnPropertyChanged(nameof(FastLinksManager.Items));
         });
 
         /// <summary>
@@ -173,14 +183,15 @@ namespace MAUIBrowser.ViewModels
         /// </summary>
         public ICommand RemoveLinkCommand => new Command<FastLinkModel>(async(fastLink) =>
         {
-            await BrowserState.FastLinksState.RemoveAsync(fastLink);
+            await FastLinksManager.DeleteAsync(fastLink);
         });
-        #endregion
 
-        #region Methods
-
-        //Content Applications
-        private void ApplyContent(string title, string url)
+		/// <summary>
+		/// Applies content
+		/// </summary>
+		/// <param name="title">Title</param>
+		/// <param name="url">Url</param>
+		private void ApplyContent(string title, string url)
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
@@ -189,9 +200,9 @@ namespace MAUIBrowser.ViewModels
             {
                 Url = url,
                 Title = title,
-                Content = new BrowserTabPage(web)
+                Content = new BrowserTabPage(_webService)
                 {
-                    BindingContext = new BrowserTabPageModel(BrowserState)
+                    BindingContext = new BrowserTabPageModel(_historyManager)
                     {
                         Url = url,
                         Title = title,
@@ -215,15 +226,15 @@ namespace MAUIBrowser.ViewModels
             contentPage.Content = tab.Content;
         }
 
-        //Load application
-        private async Task LoadingAppAsync()
+		/// <summary>
+		/// Load application
+		/// </summary>
+		/// <returns></returns>
+		private async Task LoadingAppAsync()
         {
-            count = await settings.GetSettings<int>(nameof(count), 0);
-
-            SearchEngine = BrowserState.SearchEngineState.SearchEngines[count];
-
+            _count = await _settingsService.GetSettingsAsync(nameof(_count), 0);
+            SearchEngine = SearchManager.Items[_count];
             WebViewSourceBuilder.SearchString = SearchEngine.SearchQuery;
         }
-        #endregion
     }
 }

@@ -2,13 +2,43 @@
 
 namespace MAUIBrowser.Models
 {
-    public class FastLinkModel
-    {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public string Url { get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
-        public string IconSource
+    public class FastLinkModel : BindableObject
+	{
+		private int _id;
+		private string _title = string.Empty;
+		private string _url = string.Empty;
+
+		public int Id
+		{
+			get => _id;
+			set
+			{
+				_id = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string Title
+		{
+			get => _title;
+			set
+			{
+				_title = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string Url
+		{
+			get => _url;
+			set
+			{
+				_url = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string IconSource
         {
             get
             {

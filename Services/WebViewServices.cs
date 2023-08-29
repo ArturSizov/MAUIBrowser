@@ -6,19 +6,15 @@ namespace MAUIBrowser.Services
 {
     public class WebViewServices : IWebViewService<WebView>
     {
-        #region Private property 
-        private BrowserState state;
+        private BrowserState _state;
 
-        #endregion
-
-        #region Public property 
         public WebView WebView { get; set; } = new();
-        #endregion
+
         public WebViewServices(BrowserState state)
         {
-            this.state = state;
+            _state = state;
         }
-        #region Methods
+
         /// <summary>
         /// Return to previous page
         /// </summary>
@@ -34,8 +30,10 @@ namespace MAUIBrowser.Services
             }
             else
             {
-                state.Tabs.Remove(state.CurrentTab);
-                state.CurrentTab = null;
+                if (_state.CurrentTab != null)
+                    _state.Tabs.Remove(_state.CurrentTab);
+
+                _state.CurrentTab = null;
                 contentPage.Content = new HomePanelView();
                 return false;
             }
@@ -49,7 +47,5 @@ namespace MAUIBrowser.Services
            if(WebView.CanGoForward)
                 WebView.GoForward();
         }
-        #endregion
-
     }
 }
