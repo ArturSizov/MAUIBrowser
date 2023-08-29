@@ -82,15 +82,15 @@ namespace MAUIBrowser.ViewModels
             if (tab == null)
                 return;
 
-           await BrowserState.RemoveAsync(tab);
+           await BrowserState.HistoryState.RemoveAsync(tab);
         });
 
         /// <summary>
         /// Delete history command
         /// </summary>
-        public ICommand DeleteAllHistoryCommand => new Command(async () =>
+        public ICommand DeleteAllHistoryCommand => new Command(async() =>
         {
-            await BrowserState.RemoveAllAsync();
+            await BrowserState.HistoryState.RemoveAllAsync();
             await setPopup.CloseAsync();
         });
         #endregion

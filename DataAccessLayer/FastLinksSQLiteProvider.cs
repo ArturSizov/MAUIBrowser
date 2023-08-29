@@ -54,7 +54,7 @@ namespace MAUIBrowser.DataAccessLayer
 
             try
             {
-                return await _database.DeleteAllAsync<HistoryModel>();
+                return await _database.DeleteAllAsync<FastLinkModel>();
             }
             catch (Exception ex)
             {

@@ -52,6 +52,8 @@ public static class MauiProgram
             .AddSingleton<IWebViewService<WebView>, WebViewServices>()
             .AddSingleton<IHistoryPopupService, HistoryPopupServices>()
             .AddSingleton<BrowserState>()
+			.AddSingleton<FastLinksState>()
+			.AddSingleton<HistoryState>()
             .AddSingleton<ISettingsService, SettingsService>()
 
 

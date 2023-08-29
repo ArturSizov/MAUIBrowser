@@ -26,7 +26,7 @@
                    Text="Список пуст"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
-                   IsVisible="{Binding BrowserState.Histories.Count, Converter={StaticResource LabelIsVisibleConverter}}"/>
+                   IsVisible="{Binding BrowserState.HistoryState.Histories.Count, Converter={StaticResource IsVisibleLableConverter}}"/>
             <ImageButton Grid.Row="0" 
                          WidthRequest="25" 
                          HeightRequest="25" 
@@ -40,7 +40,7 @@
 
             <ScrollView Grid.Row="1">
                 <CollectionView  
-                     ItemsSource="{Binding BrowserState.Histories}" 
+                     ItemsSource="{Binding BrowserState.HistoryState.Histories}" 
                      SelectionMode="Single" 
                      SelectionChangedCommand="{Binding HistorySelectedCommand}" 
                      SelectedItem="{Binding SelectHistory}">

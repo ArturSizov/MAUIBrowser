@@ -2,15 +2,15 @@
 
 namespace MAUIBrowser.Converters
 {
-    public class LabelIsVisibleConverter : IValueConverter
+    public class IsVisibleButtonConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is not int count)
-                return true;
+                return false;
             if (count <= 0)
-                return true;
-            else return false;
+                return false;
+            else return true;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

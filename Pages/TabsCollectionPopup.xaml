@@ -21,7 +21,7 @@
                    Text="Список пуст"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
-                   IsVisible="{Binding BrowserState.Tabs.Count, Converter={StaticResource LabelIsVisibleConverter}}"/>
+                   IsVisible="{Binding BrowserState.Tabs.Count, Converter={StaticResource IsVisibleLableConverter}}"/>
             <ImageButton Grid.Row="0" 
                          WidthRequest="25" 
                          HeightRequest="25" 

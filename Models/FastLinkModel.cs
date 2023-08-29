@@ -2,7 +2,7 @@
 
 namespace MAUIBrowser.Models
 {
-    public class FastLinkModel : BindableObject
+    public class FastLinkModel
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

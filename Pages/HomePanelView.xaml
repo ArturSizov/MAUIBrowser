@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUIBrowser.Pages.HomePanelView"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:views="clr-namespace:MAUIBrowser.Pages"
              xmlns:vm="clr-namespace:MAUIBrowser.ViewModels"
              BindingContext="{Binding Source={StaticResource Locator}, Path=HomePanelViewModel}"
@@ -58,7 +59,7 @@
         </VerticalStackLayout>
 
         <FlexLayout Grid.Row="2" 
-                    BindableLayout.ItemsSource="{Binding BrowserState.Links}"
+                    BindableLayout.ItemsSource="{Binding BrowserState.FastLinksState.Links}"
                     AlignContent="Start"
                     AlignItems="Start"
                     Wrap="Wrap">
@@ -68,40 +69,69 @@
                     <Border WidthRequest="60" 
                             HeightRequest="60" 
                             Margin="2">
+                        <Grid>
+                            <ImageButton HeightRequest="25"
+                                         WidthRequest="25"
+                                         VerticalOptions="Start"
+                                         HorizontalOptions="End"
+                                         ZIndex="1"
+                                         Margin="0,-3,-3,0"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=RemoveLinkCommand}"
+                                         CommandParameter="{Binding .}"
+                                         IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=IsVisibleDeleteFastLink}">
+                                <ImageButton.Source>
+                                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Close}" Color="Red" />
+                            </ImageButton.Source>
+                        </ImageButton>
                         <StackLayout HorizontalOptions="Center" 
                                      VerticalOptions="Center">
-                            <ImageButton Source="{Binding IconSource}" 
-                                         WidthRequest="35" 
-                                         HeightRequest="35"
-                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=FastLinkCommand}" 
-                                         CommandParameter="{Binding .}">
+
+                                <ImageButton Source="{Binding IconSource}" 
+                                             WidthRequest="35" 
+                                             HeightRequest="35"
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=FastLinkCommand}" 
+                                             CommandParameter="{Binding .}"/>
 
                                 <Label Text="{Binding Title}" FontSize="10"
                                    LineBreakMode="TailTruncation" 
                                    MaxLines="1" />
                         </StackLayout>
-
+                        </Grid>
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
+                        
                     </Border>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </FlexLayout>
 
-        <material:ButtonView Grid.Row="3"
-                             WidthRequest="50" 
-                             HeightRequest="50"
-                             Margin="15"
-                             HorizontalOptions="End"
-                             VerticalOptions="Center"
-                             PressedCommand="{Binding AddFastLinkCommand}">
-            <Label Text="+"
-                   FontSize="16" 
-                   FontAttributes="Bold"
-                   VerticalOptions="Center" 
-                   HorizontalOptions="Center"/>
-        </material:ButtonView>
+        <HorizontalStackLayout Grid.Row="3"
+                               HorizontalOptions="End">
+            <material:ButtonView
+                      PressedCommand="{Binding ButtonViewPressedCommand}"
+                      IsVisible="{Binding BrowserState.FastLinksState.Links.Count, Converter={StaticResource IsVisibleButtonConverter}}">
+                <Image>
+                    <Image.Source>
+                        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Edit}" Color="White" />
+                    </Image.Source>
+                </Image>
+            </material:ButtonView>
+            <material:ButtonView WidthRequest="50" 
+                      HeightRequest="50"
+                      Margin="15"
+                      HorizontalOptions="End"
+                      VerticalOptions="Center"
+                      PressedCommand="{Binding AddFastLinkCommand}">
+                <Label Text="+"
+            FontSize="16" 
+            FontAttributes="Bold"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"/>
+            </material:ButtonView>
+        </HorizontalStackLayout>
+
+       
 
         <views:BottomControlsView Grid.Row="4"
                                   VerticalOptions="End"/>

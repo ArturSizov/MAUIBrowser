@@ -3,7 +3,6 @@ using MAUIBrowser.Auxiliary;
 using MAUIBrowser.Models;
 using MAUIBrowser.Pages;
 using MAUIBrowser.State;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UraniumUI.Dialogs.Mopups;
 
@@ -17,6 +16,7 @@ namespace MAUIBrowser.ViewModels
         private SearchEngineModel searchEngine;
         private ISettingsService settings;
         private int count;
+        private bool isVisibleDeleteFastLink;
         #endregion
 
         #region Public property 
@@ -36,6 +36,15 @@ namespace MAUIBrowser.ViewModels
             set
             {
                 searchEngine = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsVisibleDeleteFastLink
+        {
+            get => isVisibleDeleteFastLink;
+            set
+            {
+                isVisibleDeleteFastLink = value;
                 OnPropertyChanged();
             }
         }
@@ -121,12 +130,22 @@ namespace MAUIBrowser.ViewModels
         });
 
         /// <summary>
+        /// Sets the visibility of the delete button
+        /// </summary>
+        public ICommand ButtonViewPressedCommand => new Command(() =>
+        {
+            IsVisibleDeleteFastLink = !IsVisibleDeleteFastLink;
+        });
+
+        /// <summary>
         /// Add fast link Command
         /// </summary>
-        public ICommand AddFastLinkCommand => new Command<FastLinkModel>(async (fastLink) =>
+        public ICommand AddFastLinkCommand => new Command<FastLinkModel>(async(fastLink) =>
         {
             if (Application.Current?.MainPage is not ContentPage contentPage)
                 return;
+
+            IsVisibleDeleteFastLink = false;
 
             var title = await contentPage.DisplayTextPromptAsync("Пожалуйста, введите данные", "Uri или запрос", "Ok", "Отмена");
 
@@ -139,14 +158,22 @@ namespace MAUIBrowser.ViewModels
             if (Uri.TryCreate(title, UriKind.Absolute, out var uri) && uri != null)
                 title = uri.Host;
 
-            BrowserState.Links.Add(new()
+            await BrowserState.FastLinksState.InsertAsync(new()
             {
                 Title = title,
                 Url = source
             });
 
             OnPropertyChanged(nameof(BrowserState));
-            OnPropertyChanged(nameof(BrowserState.Links));
+            OnPropertyChanged(nameof(BrowserState.FastLinksState.Links));
+        });
+
+        /// <summary>
+        /// Remove one link
+        /// </summary>
+        public ICommand RemoveLinkCommand => new Command<FastLinkModel>(async(fastLink) =>
+        {
+            await BrowserState.FastLinksState.RemoveAsync(fastLink);
         });
         #endregion
 
