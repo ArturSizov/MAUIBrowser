@@ -1,7 +1,6 @@
 ﻿using MAUIBrowser.Abstractions;
 using MAUIBrowser.Auxiliary;
 using MAUIBrowser.Models;
-using MAUIBrowser.State;
 using System.Windows.Input;
 
 namespace MAUIBrowser.ViewModels
@@ -9,13 +8,13 @@ namespace MAUIBrowser.ViewModels
     public class BrowserTabPageModel : BindableObject
     {
         private readonly IBrowserStateManager<HistoryModel> _historyManager;
+        private string entryUrl = string.Empty;
 
         public string Title { get; set; } = string.Empty;
 
         public string Url { get; set; } = string.Empty;
 
-        public string EntryUrl { get; set; } = string.Empty;
-
+        public string EntryUrl { get => entryUrl; set => entryUrl = value; }
 
         public BrowserTabPageModel(IBrowserStateManager<HistoryModel> historyManager)
         {
@@ -54,8 +53,9 @@ namespace MAUIBrowser.ViewModels
             if (args == null || args.Source is not UrlWebViewSource source)
                 return;
 
-            Url = source.Url;
-            EntryUrl = Url;
+            EntryUrl = source.Url;
+
+            Url = EntryUrl;
 
 			await _historyManager.CreateAsync(new HistoryModel
 			{

@@ -12,8 +12,8 @@ namespace MAUIBrowser.ViewModels
         private IHistoryPopupService _historyPopupService;
         private IWebViewService<WebView> _webViewService;
         private HistoryModel? selectHistory;
-
         public IBrowserStateManager<HistoryModel> HistoryManager { get; }
+        private BrowserState _state;
 
         public HistoryModel? SelectHistory
         {
@@ -25,11 +25,12 @@ namespace MAUIBrowser.ViewModels
             }
         }
 
-        public HistoryPopupViewModel(IBrowserStateManager<HistoryModel> historyManager, IHistoryPopupService historyPopupService, IWebViewService<WebView> webViewService)
+        public HistoryPopupViewModel(IBrowserStateManager<HistoryModel> historyManager, IHistoryPopupService historyPopupService, IWebViewService<WebView> webViewService, BrowserState state)
         {
             _webViewService = webViewService;
             _historyPopupService = historyPopupService;
 			HistoryManager = historyManager;
+            _state = state;
         }
 
         #region Commands 
@@ -66,7 +67,7 @@ namespace MAUIBrowser.ViewModels
                 Url = SelectHistory.Url
             };
 
-            //BrowserState.Tabs.Add(tap);
+            _state.Tabs.Add(tap);
 
             SelectHistory = null;
             await _historyPopupService.CloseAsync();
