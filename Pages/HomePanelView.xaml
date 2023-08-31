@@ -9,106 +9,125 @@
              BindingContext="{Binding Source={StaticResource Locator}, Path=HomePanelViewModel}"
              BackgroundColor="White">
 
-    <Grid RowDefinitions="150, *, *, 50, 50">
-        <Image Grid.Row="0"
-               Source="maui_logo.webp"
-               WidthRequest="350"/>
-
-        <VerticalStackLayout Grid.Row="1">
-        <material:TextField Title="Веедите url или запрос"
-                            Icon="{Binding SearchEngine.Image}"
-                            VerticalOptions="Center"
-                            Padding="5"
-                            Margin="0,100,0,0"
-                            Keyboard="Url"
-                            Text="{Binding Url}"
-                            BorderColor="#808080"
-                            TextColor="Black"
-                            AccentColor="#808080"
-                            TitleColor="#808080"
-                            ReturnCommand="{Binding EnterAddressCommand}"
-                            ReturnCommandParameter="{Binding Url}"
-                            AllowClear="True"
-                            ReturnType="Search"/>
-
-            <Label Text="Какой поисковой системой хотите пользоваться?"
-                   VerticalOptions="Start"
-                   HorizontalOptions="Start"
-                   Margin="15,0,0,0"
-                   FontSize="12"
+    <Grid RowDefinitions="150, *, 52, 50">
+        <VerticalStackLayout>
+            <Image Grid.Row="0"
+                   Source="maui_logo.webp"
+                   WidthRequest="350"/>
+            <Label Text="MAUI Browser"
+                   HorizontalOptions="Center"
+                   TextColor="#808080"
                    FontAttributes="Bold"
-                   TextColor="#808080"/>
-            <CollectionView ItemsLayout="HorizontalList"
-                            ItemsSource="{Binding SearchManager.Items}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <ImageButton
-                                Source="{Binding Image}"
-                                Margin="3" 
-                                HeightRequest="45"
-                                WidthRequest="55"
-                                BackgroundColor="Transparent" 
-                                HorizontalOptions="StartAndExpand"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=InstallASearchSystemCommand}"
-                                CommandParameter="{Binding .}">
-
-                        </ImageButton>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                   FontSize="20"/>
         </VerticalStackLayout>
 
-        <FlexLayout Grid.Row="2" 
-                    BindableLayout.ItemsSource="{Binding FastLinksManager.Items}"
-                    AlignContent="Start"
-                    AlignItems="Start"
-                    Wrap="Wrap">
+        <Grid RowDefinitions="50, *, 150"
+              Grid.Row="1"
+              VerticalOptions="Center"
+              Padding="1">
+
+            <material:TextField Grid.Row="0"
+                                HeightRequest="60"
+                                Margin="0,10,0,0"
+                                Title="Веедите url или запрос"
+                                Icon="{Binding SearchEngine.Image}"
+                                VerticalOptions="Center"
+                                Padding="5"
+                                Keyboard="Url"
+                                Text="{Binding Url}"
+                                BorderColor="#808080"
+                                TextColor="Black"
+                                AccentColor="#808080"
+                                TitleColor="#808080"
+                                ReturnCommand="{Binding EnterAddressCommand}"
+                                ReturnCommandParameter="{Binding Url}"
+                                AllowClear="True"
+                                ReturnType="Search"/>
+
+            <VerticalStackLayout Grid.Row="1"
+                                 Margin="0,20,0,0">
+                <Label Text="Какой поисковой системой хотите пользоваться?"
+                       VerticalOptions="Start"
+                       HorizontalOptions="Start"
+                       Margin="10,0,0,0"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       TextColor="#808080"/>
+
+                <CollectionView ItemsLayout="HorizontalList"
+                    ItemsSource="{Binding SearchManager.Items}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ImageButton Source="{Binding Image}"
+                                         Margin="3" 
+                                         HeightRequest="45"
+                                         WidthRequest="55"
+                                         BackgroundColor="Transparent" 
+                                         HorizontalOptions="StartAndExpand"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=InstallASearchSystemCommand}"
+                                         CommandParameter="{Binding .}">
+                            </ImageButton>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <FlexLayout Grid.Row="2" 
+                        BindableLayout.ItemsSource="{Binding FastLinksManager.Items}"
+                        AlignContent="Start"
+                        AlignItems="Start"
+                        Wrap="Wrap"
+                        Margin="0,50,0,0">
+
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border WidthRequest="60" 
+                                HeightRequest="60" 
+                                Margin="2">
+                            <Grid>
+                                <ImageButton HeightRequest="25"
+                                             WidthRequest="25"
+                                             VerticalOptions="Start"
+                                             HorizontalOptions="End"
+                                             ZIndex="1"
+                                             Margin="0,-3,-3,0"
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=RemoveLinkCommand}"
+                                             CommandParameter="{Binding .}"
+                                             IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=IsVisibleDeleteFastLink}">
+                                    <ImageButton.Source>
+                                        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Close}" Color="Red" />
+                                    </ImageButton.Source>
+                                </ImageButton>
+                                <StackLayout HorizontalOptions="Center" 
+                                              VerticalOptions="Center">
+
+                                    <ImageButton Source="{Binding IconSource}" 
+                                                 WidthRequest="35" 
+                                                 HeightRequest="35"
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=FastLinkCommand}" 
+                                                 CommandParameter="{Binding .}"/>
+
+                                    <Label Text="{Binding Title}" FontSize="10"
+                                           LineBreakMode="TailTruncation" 
+                                           MaxLines="1" />
+                                </StackLayout>
+                            </Grid>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </Grid>
             
-            <BindableLayout.ItemTemplate>
-                <DataTemplate>
-                    <Border WidthRequest="60" 
-                            HeightRequest="60" 
-                            Margin="2">
-                        <Grid>
-                            <ImageButton HeightRequest="25"
-                                         WidthRequest="25"
-                                         VerticalOptions="Start"
-                                         HorizontalOptions="End"
-                                         ZIndex="1"
-                                         Margin="0,-3,-3,0"
-                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=RemoveLinkCommand}"
-                                         CommandParameter="{Binding .}"
-                                         IsVisible="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=IsVisibleDeleteFastLink}">
-                                <ImageButton.Source>
-                                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Close}" Color="Red" />
-                            </ImageButton.Source>
-                        </ImageButton>
-                        <StackLayout HorizontalOptions="Center" 
-                                     VerticalOptions="Center">
-
-                                <ImageButton Source="{Binding IconSource}" 
-                                             WidthRequest="35" 
-                                             HeightRequest="35"
-                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePanelViewModel}}, Path=FastLinkCommand}" 
-                                             CommandParameter="{Binding .}"/>
-
-                                <Label Text="{Binding Title}" FontSize="10"
-                                   LineBreakMode="TailTruncation" 
-                                   MaxLines="1" />
-                        </StackLayout>
-                        </Grid>
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-                        
-                    </Border>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </FlexLayout>
-
-        <HorizontalStackLayout Grid.Row="3"
-                               HorizontalOptions="End">
+        <HorizontalStackLayout Grid.Row="2"
+                               HorizontalOptions="End"
+                               Padding="10">
             <material:ButtonView
+                      WidthRequest="50"
+                      HeightRequest="50"
                       PressedCommand="{Binding ButtonViewPressedCommand}"
                       IsVisible="{Binding FastLinksManager.Items.Count, Converter={StaticResource IsVisibleButtonConverter}}">
                 <Image>
@@ -117,23 +136,20 @@
                     </Image.Source>
                 </Image>
             </material:ButtonView>
-            <material:ButtonView WidthRequest="50" 
+            <material:ButtonView
+                      WidthRequest="50"
                       HeightRequest="50"
-                      Margin="15"
-                      HorizontalOptions="End"
-                      VerticalOptions="Center"
                       PressedCommand="{Binding AddFastLinkCommand}">
-                <Label Text="+"
-            FontSize="16" 
-            FontAttributes="Bold"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"/>
+                <Label 
+                    Text="+"
+                    FontSize="16" 
+                    FontAttributes="Bold"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"/>
             </material:ButtonView>
         </HorizontalStackLayout>
 
-       
-
-        <views:BottomControlsView Grid.Row="4"
+        <views:BottomControlsView Grid.Row="3"
                                   VerticalOptions="End"/>
 
     </Grid>

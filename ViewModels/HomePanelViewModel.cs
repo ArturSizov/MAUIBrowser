@@ -18,12 +18,8 @@ namespace MAUIBrowser.ViewModels
         private SearchEngineModel? _searchEngine;
         private int _count;
         private bool _isVisibleDeleteFastLink;
-
         public BrowserState BrowserState { get; }
-
-
 		public IBrowserStateManager<FastLinkModel> FastLinksManager { get; }
-
 		public IBrowserStateManager<SearchEngineModel> SearchManager { get; }
 
 		public string Url
